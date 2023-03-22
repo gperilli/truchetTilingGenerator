@@ -1,0 +1,11 @@
+html, body {
+    margin: 0px;
+    overflow: hidden;
+    }
+    
+    :root {
+        --font-family-main: "Mada", sans-serif;
+        --font-family1: "Poppins", sans-serif;
+        --font-family2: "Crimson Text", serif;
+    }
+    
