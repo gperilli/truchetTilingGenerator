@@ -67,5 +67,5 @@ gui.add( obj, 'density', 5, 50 ).onChange( value => {
     console.log(truchetSettings)
     localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
     document.querySelector(`#${tilingArea}`).remove()
-    setTruchetBlockLayout(topLevelContainer, truchetSettings)
+    setRhombileBlockLayout(topLevelContainer, truchetSettings)
 });

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Truchet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+
+
+    <body style="width: 100vw; height: 100vh; margin: 0px; overflow: hidden;"></body>
+
+    <script src="src/index.js" type="module"></script>
+  
+</html>
+
+<script>
+    // https://www.codedrome.com/drawing-arcs-pie-slices-with-svg/
+    window.onload = function()
+    {
+        // arc();
+
+        pieSlice();
+
+        // pieChart();
+    }
+
+    function pieSlice()
+    {
+        drawPieSlice({ id: "svg", centreX: 100, centreY: 100, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: 50, fillColour: "#000" } );
+        drawPieSlice({ id: "svg", centreX: 100, centreY: 100, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: 45, fillColour: "#FFF" } );
+        drawPieSlice({ id: "svg", centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: 50, fillColour: "#000" } );
+        drawPieSlice({ id: "svg", centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: 45, fillColour: "#FFF" } );
+    }
+
+    function drawPieSlice(settings)
+    {
+        let d = "";
+
+        const firstCircumferenceX = settings.centreX + settings.radius * Math.cos(settings.startAngleRadians);
+        const firstCircumferenceY = settings.centreY + settings.radius * Math.sin(settings.startAngleRadians);
+        const secondCircumferenceX = settings.centreX + settings.radius * Math.cos(settings.startAngleRadians + settings.sweepAngleRadians);
+        const secondCircumferenceY = settings.centreY + settings.radius * Math.sin(settings.startAngleRadians + settings.sweepAngleRadians);
+
+        // move to centre
+        d += "M" + settings.centreX + "," + settings.centreY + " ";
+        // line to first edge
+        d += "L" + firstCircumferenceX + "," + firstCircumferenceY + " ";
+        // arc
+        // Radius X, Radius Y, X Axis Rotation, Large Arc Flag, Sweep Flag, End X, End Y
+        d += "A" + settings.radius + "," + settings.radius + " 0 0,1 " + secondCircumferenceX + "," + secondCircumferenceY + " ";
+        // close path
+        d += "Z";
+
+        const arc = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+        arc.setAttributeNS(null, "d", d);
+        arc.setAttributeNS(null, "fill", settings.fillColour);
+        //arc.setAttributeNS(null, "style", "stroke:" + settings.strokeColour + ";");
+        // arc.setAttributeNS(null, "stroke-width:" + 5 + ";");
+
+        document.getElementById(settings.id).appendChild(arc);
+    }
+</script>

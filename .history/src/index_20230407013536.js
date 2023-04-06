@@ -54,18 +54,18 @@ const camelConverter = {
 const gui = new GUI();
 
 const obj = { 
-    density: truchetSettings["tileDensity"], 
-    opacity: truchetSettings["coloringOpacity"] * 100, 
-    coloring: camelConverter[truchetSettings.coloring], 
-    fadeins: camelConverter[truchetSettings.fadeIn], 
-    color1: truchetSettings["colorTwo"],
-    animations: camelConverter[truchetSettings.animation]
+    density: rhombileSettings["tileDensity"], 
+    opacity: rhombileSettings["coloringOpacity"] * 100, 
+    coloring: camelConverter[rhombileSettings.coloring], 
+    fadeins: camelConverter[rhombileSettings.fadeIn], 
+    color1: rhombileSettings["colorTwo"],
+    animations: camelConverter[rhombileSettings.animation]
 }
 
 gui.add( obj, 'density', 5, 50 ).onChange( value => {
-    truchetSettings.tileDensity = Math.floor(value);
-    console.log(truchetSettings)
-    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+    rhombileSettings.tileDensity = Math.floor(value);
+    console.log(rhombileSettings)
+    localStorage.setItem("rhombileSettings", JSON.stringify(rhombileSettings))
     document.querySelector(`#${tilingArea}`).remove()
-    setTruchetBlockLayout(topLevelContainer, truchetSettings)
+    setRhombileBlockLayout(topLevelContainer, rhombileSettings)
 });
