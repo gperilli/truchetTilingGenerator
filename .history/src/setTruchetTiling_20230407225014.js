@@ -48,12 +48,17 @@ class TruchetTile {
         this.blockContainer.appendChild(arc);
     }
 
+    tile(tileWidth)
+    {
+        
+    }
 }
 
 function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSettings) {
     var tilingArea = containerSquare;
 
     const tileWidth = tilingAreaWidthLength / truchetSettings["tileDensity"];
+
 
     let truchetTile = new TruchetTile(tileWidth, truchetSettings);
     tilingArea.insertAdjacentHTML("beforeend", truchetTile.blockContainer.outerHTML);

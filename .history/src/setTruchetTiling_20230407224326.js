@@ -5,18 +5,20 @@ export { setTruchetTiling }
 class TruchetTile {
     constructor(tileWidth, rhombileSettings) {
         this.blockContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        this.tileWidth = tileWidth;
-        this.blockContainer.setAttribute("height", tileWidth);
-        this.blockContainer.setAttribute("width", tileWidth);
 
+        
         this.init()
     }
 
     init() {
-        this.drawPieSlice({ id: "svg", centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: this.tileWidth / 2, fillColour: "#000" } );
-        this.drawPieSlice({ id: "svg", centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) - 5, fillColour: "#FFF" } );
-        this.drawPieSlice({ id: "svg", centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: this.tileWidth / 2, fillColour: "#000" } );
-        this.drawPieSlice({ id: "svg", centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) - 5, fillColour: "#FFF" } );
+        // this.createCubeSidePolygon(cubeTopPoints, tileColors[0], strokeWidth, strokeColors[0]);
+        // this.createCubeSidePolygon(cubeLeftPoints, tileColors[1], strokeWidth, strokeColors[1]);
+        // this.createCubeSidePolygon(cubeRightPoints, tileColors[2], strokeWidth, strokeColors[2]);
+
+        this.drawPieSlice({ id: "svg", centreX: 100, centreY: 100, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: 50, fillColour: "#000" } );
+        this.drawPieSlice({ id: "svg", centreX: 100, centreY: 100, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: 45, fillColour: "#FFF" } );
+        this.drawPieSlice({ id: "svg", centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: 50, fillColour: "#000" } );
+        this.drawPieSlice({ id: "svg", centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: 45, fillColour: "#FFF" } );
       
         return this.blockContainer;
     }
@@ -44,16 +46,24 @@ class TruchetTile {
 
         arc.setAttributeNS(null, "d", d);
         arc.setAttributeNS(null, "fill", settings.fillColour);
+        //arc.setAttributeNS(null, "style", "stroke:" + settings.strokeColour + ";");
+        // arc.setAttributeNS(null, "stroke-width:" + 5 + ";");
 
+        // document.getElementById(settings.id).appendChild(arc);
         this.blockContainer.appendChild(arc);
     }
 
+    tile(tileWidth)
+    {
+        
+    }
 }
 
 function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSettings) {
     var tilingArea = containerSquare;
 
     const tileWidth = tilingAreaWidthLength / truchetSettings["tileDensity"];
+
 
     let truchetTile = new TruchetTile(tileWidth, truchetSettings);
     tilingArea.insertAdjacentHTML("beforeend", truchetTile.blockContainer.outerHTML);
