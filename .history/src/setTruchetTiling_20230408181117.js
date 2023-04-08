@@ -1,7 +1,5 @@
-import { degrees_to_radians } from '/src/utils/trig.js'
-
 export { setTruchetTiling }
-
+// import { degrees_to_radians } from '/src/utils/trig.js'
 // import { pythagorean } from '/src/utils/trig.js'
 
 class TruchetTile {
@@ -11,37 +9,26 @@ class TruchetTile {
         this.strokeWidth = 5;
         this.blockContainer.setAttribute("height", tileWidth);
         this.blockContainer.setAttribute("width", tileWidth);
-        this.blockContainer.style.position = "absolute";
-        this.tileType = Math.floor(Math.random() * 2);     
+        this.blockContainer.style.position = "absolute";        
 
         this.init()
     }
 
     init() {
-
-        if (this.tileType == 0) {
-            this.createTileA()
-        } else {
-            this.createTileB()
-        }
-
+        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
+        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
+        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
+        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
+      
         return this.blockContainer;
     }
 
-    createTileA()
+    createTile()
     {
-        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(180) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
-        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(180) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
-        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
-        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
-    }
-
-    createTileB()
-    {
-        this.createPieSlice({ centreX: this.tileWidth, centreY: 0, startAngleRadians: degrees_to_radians(90), sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
-        this.createPieSlice({ centreX: this.tileWidth, centreY: 0, startAngleRadians: degrees_to_radians(90), sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
-        this.createPieSlice({ centreX: 0, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(270) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
-        this.createPieSlice({ centreX: 0, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(270) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
+        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
+        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: Math.PI , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
+        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
+        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: Math.PI / 2, radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
     }
 
     createPieSlice(settings)
@@ -70,6 +57,7 @@ class TruchetTile {
 
         this.blockContainer.appendChild(arc);
     }
+
 }
 
 function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSettings) {
@@ -92,5 +80,3 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
         }
     }
 }
-
-

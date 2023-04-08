@@ -30,18 +30,18 @@ class TruchetTile {
 
     createTileA()
     {
-        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(180) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
-        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(180) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
-        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
-        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: 0 , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
+        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(270) , sweepAngleRadians: degrees_to_radians(360), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
+        this.createPieSlice({ centreX: this.tileWidth, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(270) , sweepAngleRadians: degrees_to_radians(360), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
+        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: degrees_to_radians(0) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
+        this.createPieSlice({ centreX: 0, centreY: 0, startAngleRadians: degrees_to_radians(0) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
     }
 
     createTileB()
     {
-        this.createPieSlice({ centreX: this.tileWidth, centreY: 0, startAngleRadians: degrees_to_radians(90), sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
-        this.createPieSlice({ centreX: this.tileWidth, centreY: 0, startAngleRadians: degrees_to_radians(90), sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
-        this.createPieSlice({ centreX: 0, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(270) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
-        this.createPieSlice({ centreX: 0, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(270) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
+        this.createPieSlice({ centreX: this.tileWidth, centreY: 0, startAngleRadians: degrees_to_radians(180), sweepAngleRadians: degrees_to_radians(270), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
+        this.createPieSlice({ centreX: this.tileWidth, centreY: 0, startAngleRadians: degrees_to_radians(180), sweepAngleRadians: degrees_to_radians(270), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
+        this.createPieSlice({ centreX: 0, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(0) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) + (this.strokeWidth / 2), fillColour: "#000" } );
+        this.createPieSlice({ centreX: 0, centreY: this.tileWidth, startAngleRadians: degrees_to_radians(0) , sweepAngleRadians: degrees_to_radians(90), radius: (this.tileWidth / 2) - (this.strokeWidth / 2), fillColour: "#FFF" } );
     }
 
     createPieSlice(settings)
@@ -92,5 +92,3 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
         }
     }
 }
-
-

@@ -16,7 +16,7 @@ let topLevelContainerDimensions, topLevelContainerWidth, topLevelContainerHeight
 function containerSquarePositioning(containerSquare, containerSquareWidth, containerXOffset, containerYOffset) {
     containerSquare.style.width = containerSquareWidth + "px";
     containerSquare.style.height = containerSquareWidth + "px";
-    containerSquare.style.left = "".concat(containerXOffset, "px");
+    containerSquare.style.left = "".concat((containerXOffset * 2), "px");
     containerSquare.style.top = "".concat(containerYOffset, "px");
 }
 
