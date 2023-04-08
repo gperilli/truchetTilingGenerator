@@ -81,7 +81,7 @@ class TruchetTile {
         this.topLeft.setAttribute('class', 'truchetTopLeft');
 
         this.topRightClass = 'truchetBottomLeftToTopRightBack';
-        this.bottomLeftClass = 'truchetBottomLeftToTopRightBack';
+        this.topLeftClass = 'truchetBottomLeftToTopRightBack';
         this.topRight = this.blockContainer;
         this.bottomLeft = this.blockContainer;
         this.blockContainer.setAttribute('class', 'truchetBottomLeftToTopRightBack')

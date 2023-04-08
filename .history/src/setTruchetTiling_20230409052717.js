@@ -20,16 +20,10 @@ class TruchetTile {
         this.bottomRight;
 
         // this.blockContainer.setAttribute('class', 'truchetBack');
-        this.topLeftClass;
-        this.topRightClass;
-        this.botttomLeftClass;
-        this.bottomRightClass;
-
-        
         this.topLeftElement;
         this.topRightElement;
         this.botttomLeftElement;
-        this.bottomRightElement;
+        this.bottomRightELement;
 
         this.init()
     }
@@ -61,7 +55,6 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" } );
-        this.bottomRightClass = 'truchetBottomRight';
         this.bottomRight.setAttribute('class', 'truchetBottomRight');
         this.createPieSlice({ 
             centreX: 0, 
@@ -77,11 +70,8 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" } );
-        this.topLeftClass = 'truchetTopLeft';
         this.topLeft.setAttribute('class', 'truchetTopLeft');
 
-        this.topRightClass = 'truchetBottomLeftToTopRightBack';
-        this.bottomLeftClass = 'truchetBottomLeftToTopRightBack';
         this.topRight = this.blockContainer;
         this.bottomLeft = this.blockContainer;
         this.blockContainer.setAttribute('class', 'truchetBottomLeftToTopRightBack')
@@ -103,8 +93,7 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" });
-        this.topRightClass = 'truchetTopRight';
-        this.topRight.setAttribute('class', 'truchetTopRight');
+        this.bottomRight.setAttribute('class', 'truchetBottomLeft');
         this.createPieSlice({ 
             centreX: 0, 
             centreY: this.tileWidth, 
@@ -119,11 +108,8 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" });
-        this.bottomLeftClass = 'truchetBottomLeft';
         this.bottomLeft.setAttribute('class', 'truchetBottomLeft');
-        
-        this.topLeftClass = 'truchetBottomRightToTopLeftBack';
-        this.bottomRightClass = 'truchetBottomRightToTopLeftBack';
+
         this.topLeft = this.blockContainer;
         this.bottomRight = this.blockContainer;
         this.blockContainer.setAttribute('class', 'truchetBottomRightToTopLeftBack')
@@ -158,18 +144,11 @@ class TruchetTile {
         return arc;
     }
 
-    setTruchetTileDomElements() {
-        console.log("setting");
-        // console.log(document.querySelectorAll(`.${this.topLeftClass}`));
-        // console.log(document.querySelectorAll(`.${this.topLeftClass}`).length);
-        let topLeftElements = document.querySelectorAll(`.${this.topLeftClass}`);
-        this.topLeftElement = topLeftElements[topLeftElements.length -1];
-        let topRightElements = document.querySelectorAll(`.${this.topRightClass}`);
-        this.topRightElement = topRightElements[topRightElements.length -1];
-        let bottomLeftElements = document.querySelectorAll(`.${this.bottomLeftClass}`);
-        this.botttomLeftElement = bottomLeftElements[bottomLeftElements.length -1];
-        let bottomRightElements = document.querySelectorAll(`.${this.bottomRightClass}`);
-        this.bottomRightElement = bottomRightElements[bottomRightElements.length -1];
+    getTruchetTileDomElements() {
+        this.topLeftElement;
+        this.topRightElement;
+        this.botttomLeftElement;
+        this.bottomRightELement;
     }
 }
 
@@ -191,7 +170,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             
             
             tilingArea.insertAdjacentHTML("beforeend", tileMatrix[j][i].blockContainer.outerHTML);
-            tileMatrix[j][i].setTruchetTileDomElements();
+            //tileMatrix[j][i].
         }
     }
 

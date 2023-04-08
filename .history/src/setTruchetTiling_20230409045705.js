@@ -19,18 +19,6 @@ class TruchetTile {
         this.botttomLeft;
         this.bottomRight;
 
-        // this.blockContainer.setAttribute('class', 'truchetBack');
-        this.topLeftClass;
-        this.topRightClass;
-        this.botttomLeftClass;
-        this.bottomRightClass;
-
-        
-        this.topLeftElement;
-        this.topRightElement;
-        this.botttomLeftElement;
-        this.bottomRightElement;
-
         this.init()
     }
 
@@ -54,15 +42,13 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) + (this.strokeWidth / 2), 
             fillColour: "#000" } ); //border
-        this.bottomRight = this.createPieSlice({ 
+        this.bottomRight this.createPieSlice({ 
             centreX: this.tileWidth, 
             centreY: this.tileWidth, 
             startAngleRadians: degrees_to_radians(180) , 
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" } );
-        this.bottomRightClass = 'truchetBottomRight';
-        this.bottomRight.setAttribute('class', 'truchetBottomRight');
         this.createPieSlice({ 
             centreX: 0, 
             centreY: 0, 
@@ -77,14 +63,9 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" } );
-        this.topLeftClass = 'truchetTopLeft';
-        this.topLeft.setAttribute('class', 'truchetTopLeft');
 
-        this.topRightClass = 'truchetBottomLeftToTopRightBack';
-        this.bottomLeftClass = 'truchetBottomLeftToTopRightBack';
         this.topRight = this.blockContainer;
         this.bottomLeft = this.blockContainer;
-        this.blockContainer.setAttribute('class', 'truchetBottomLeftToTopRightBack')
     }
 
     createTileB()
@@ -103,8 +84,6 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" });
-        this.topRightClass = 'truchetTopRight';
-        this.topRight.setAttribute('class', 'truchetTopRight');
         this.createPieSlice({ 
             centreX: 0, 
             centreY: this.tileWidth, 
@@ -119,14 +98,9 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" });
-        this.bottomLeftClass = 'truchetBottomLeft';
-        this.bottomLeft.setAttribute('class', 'truchetBottomLeft');
-        
-        this.topLeftClass = 'truchetBottomRightToTopLeftBack';
-        this.bottomRightClass = 'truchetBottomRightToTopLeftBack';
+
         this.topLeft = this.blockContainer;
         this.bottomRight = this.blockContainer;
-        this.blockContainer.setAttribute('class', 'truchetBottomRightToTopLeftBack')
     }
 
     createPieSlice(settings)
@@ -157,20 +131,6 @@ class TruchetTile {
 
         return arc;
     }
-
-    setTruchetTileDomElements() {
-        console.log("setting");
-        // console.log(document.querySelectorAll(`.${this.topLeftClass}`));
-        // console.log(document.querySelectorAll(`.${this.topLeftClass}`).length);
-        let topLeftElements = document.querySelectorAll(`.${this.topLeftClass}`);
-        this.topLeftElement = topLeftElements[topLeftElements.length -1];
-        let topRightElements = document.querySelectorAll(`.${this.topRightClass}`);
-        this.topRightElement = topRightElements[topRightElements.length -1];
-        let bottomLeftElements = document.querySelectorAll(`.${this.bottomLeftClass}`);
-        this.botttomLeftElement = bottomLeftElements[bottomLeftElements.length -1];
-        let bottomRightElements = document.querySelectorAll(`.${this.bottomRightClass}`);
-        this.bottomRightElement = bottomRightElements[bottomRightElements.length -1];
-    }
 }
 
 function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSettings) {
@@ -179,24 +139,19 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     const tileWidth = tilingAreaWidthLength / truchetSettings["tileDensity"];
     
 
-    let tileMatrix = [];
+    let tiles = [];
     //let blockCount = -1;
     for (let j = 0; j < truchetRows; j++) {
-        tileMatrix[j] = [];
+        tiles[j] = [];
 
         for (let i = 0; i < truchetRows; i++) {
-            tileMatrix[j][i] = new TruchetTile(tileWidth, truchetSettings);
-            tileMatrix[j][i].blockContainer.style.top = `${(tileWidth * j)}px`;
-            tileMatrix[j][i].blockContainer.style.left = `${(tileWidth * i)}px`;
+            tiles[j][i] = new TruchetTile(tileWidth, truchetSettings);
+            tiles[j][i].blockContainer.style.top = `${(tileWidth * j)}px`;
+            tiles[j][i].blockContainer.style.left = `${(tileWidth * i)}px`;
             
-            
-            tilingArea.insertAdjacentHTML("beforeend", tileMatrix[j][i].blockContainer.outerHTML);
-            tileMatrix[j][i].setTruchetTileDomElements();
+            tilingArea.insertAdjacentHTML("beforeend", tiles[j][i].blockContainer.outerHTML);
         }
     }
-
-    // tileMatrix[5][5].blockContainer.style.background = "yellow";
-    console.log(tileMatrix[5][5]);
 }
 
 

@@ -81,7 +81,7 @@ class TruchetTile {
         this.topLeft.setAttribute('class', 'truchetTopLeft');
 
         this.topRightClass = 'truchetBottomLeftToTopRightBack';
-        this.bottomLeftClass = 'truchetBottomLeftToTopRightBack';
+        this.topLeftClass = 'truchetBottomLeftToTopRightBack';
         this.topRight = this.blockContainer;
         this.bottomLeft = this.blockContainer;
         this.blockContainer.setAttribute('class', 'truchetBottomLeftToTopRightBack')
@@ -103,7 +103,6 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" });
-        this.topRightClass = 'truchetTopRight';
         this.topRight.setAttribute('class', 'truchetTopRight');
         this.createPieSlice({ 
             centreX: 0, 
@@ -119,11 +118,8 @@ class TruchetTile {
             sweepAngleRadians: degrees_to_radians(90), 
             radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
             fillColour: "#FFF" });
-        this.bottomLeftClass = 'truchetBottomLeft';
         this.bottomLeft.setAttribute('class', 'truchetBottomLeft');
-        
-        this.topLeftClass = 'truchetBottomRightToTopLeftBack';
-        this.bottomRightClass = 'truchetBottomRightToTopLeftBack';
+
         this.topLeft = this.blockContainer;
         this.bottomRight = this.blockContainer;
         this.blockContainer.setAttribute('class', 'truchetBottomRightToTopLeftBack')
