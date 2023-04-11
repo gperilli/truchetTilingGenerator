@@ -220,14 +220,13 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                 // bottom left corner tile
                 let tileToTheLeft = null;
                 if (tileMatrix[j][i].bottomLeftClass == 'truchetBottomLeft') {
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].bottomLeftElement);
+                    contiguousGroups[contiguousGroups.length].push(tileMatrix[j][i].bottomLeftElement);
                 }
             } else if (i == (truchetRows - 1) && j == (truchetRows - 1)) {
                 // bottom right corner tile
                 if (tileMatrix[j][i].bottomRightClass == 'truchetBottomRight') {
                     contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].bottomRightElement);
+                    contiguousGroups[contiguousGroups.length][0] = tileMatrix[j][i].bottomRightElement;
                 }
             } else if (i == 0 && j > 0 && j != (truchetRows - 1)) {
                 // far left column - not top left corner - not bottom left corner

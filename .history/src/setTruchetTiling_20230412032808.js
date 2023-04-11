@@ -204,30 +204,29 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             if (i == 0 && j == 0) {
                 // top left corner tile
                 let tileToTheLeft = null;
-                // console.log(tileMatrix[j][i].topLeftClass);
+                console.log(tileMatrix[j][i].topLeftClass);
                 if (tileMatrix[j][i].topLeftClass == 'truchetTopLeft') {
                     contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].topLeftElement);
+                    contiguousGroups[contiguousGroups.length].push(tileMatrix[j][i].topLeftElement);
                 }
             } else if (i == (truchetRows - 1) && j == 0) {
                 // top right corner tile
                 let tileAbove = null;
                 if (tileMatrix[j][i].topRightClass == 'truchetTopRight') {
                     contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].topRightElement);
+                    contiguousGroups[contiguousGroups.length].push(tileMatrix[j][i].topRightElement);
                 }
             } else if (i == 0 && j == (truchetRows - 1)) {
                 // bottom left corner tile
                 let tileToTheLeft = null;
                 if (tileMatrix[j][i].bottomLeftClass == 'truchetBottomLeft') {
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].bottomLeftElement);
+                    contiguousGroups[contiguousGroups.length].push(tileMatrix[j][i].bottomLeftElement);
                 }
             } else if (i == (truchetRows - 1) && j == (truchetRows - 1)) {
                 // bottom right corner tile
                 if (tileMatrix[j][i].bottomRightClass == 'truchetBottomRight') {
                     contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].bottomRightElement);
+                    contiguousGroups[contiguousGroups.length][0] = tileMatrix[j][i].bottomRightElement;
                 }
             } else if (i == 0 && j > 0 && j != (truchetRows - 1)) {
                 // far left column - not top left corner - not bottom left corner

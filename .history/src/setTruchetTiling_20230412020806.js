@@ -195,54 +195,32 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     }
 
     // tileMatrix[5][5].blockContainer.style.background = "yellow";
-    //console.log(tileMatrix[0][0]);
+    console.log(tileMatrix[0][0]);
 
     let contiguousGroups = [];
-    for (let j = 0; j < truchetRows; j++) {
+    for (let j = 0; j < truchetRows; i++) {
         for (let i = 0; i < truchetRows; i++) {
-            
-            if (i == 0 && j == 0) {
-                // top left corner tile
-                let tileToTheLeft = null;
-                // console.log(tileMatrix[j][i].topLeftClass);
-                if (tileMatrix[j][i].topLeftClass == 'truchetTopLeft') {
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].topLeftElement);
+            if (i > 0) {
+                let tileToTheLeft = tileMatrix[j][i - 1];
+            } else {
+                let tileToTheLeft = nil;
+                if (this.botttomLeftClass == 'truchetBottomLeft') {
+                    contiguousGroups[contiguousGroups.length].push(this.bottomLeftElement);
                 }
-            } else if (i == (truchetRows - 1) && j == 0) {
-                // top right corner tile
-                let tileAbove = null;
-                if (tileMatrix[j][i].topRightClass == 'truchetTopRight') {
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].topRightElement);
+            } 
+            if (j > 0) {
+                let tileAbove = tileMatrix[j - 1][i];
+            } else {
+                let tileAbove = nil;
+                if (this.topLeftClass == 'truchetTopLeft') {
+                    contiguousGroups[contiguousGroups.length].push(this.bottomLeftElement);
                 }
-            } else if (i == 0 && j == (truchetRows - 1)) {
-                // bottom left corner tile
-                let tileToTheLeft = null;
-                if (tileMatrix[j][i].bottomLeftClass == 'truchetBottomLeft') {
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].bottomLeftElement);
-                }
-            } else if (i == (truchetRows - 1) && j == (truchetRows - 1)) {
-                // bottom right corner tile
-                if (tileMatrix[j][i].bottomRightClass == 'truchetBottomRight') {
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[j][i].bottomRightElement);
-                }
-            } else if (i == 0 && j > 0 && j != (truchetRows - 1)) {
-                // far left column - not top left corner - not bottom left corner
-                let tileToTheLeft = null;
-            } else if (i > 0 && j == 0 && i != (truchetRows - 1)) {
-                // top row - not top left corner - not top right corner
-                let tileAbove = null;
-            } else if (i > 0 && j > 0 && i != (truchetRows - 1) && j != (truchetRows - 1)) {
-                // tiles that have both left side and upper side adjacent tiles
             }
+
+
 
         }
     }
-
-    console.log(contiguousGroups);
 }
 
 
