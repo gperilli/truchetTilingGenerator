@@ -279,47 +279,30 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             // top row
             if (tileAbove == null && x > 0) {
                 if (tileMatrix[y][x].topRightClass == 'truchetTopRight') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
+                    contiguousGroups[contiguousGroups.length] = [];
+                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
                     tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
-                }
-
-                if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
-                    //tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
-                    if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetTopRight') {
-                        //if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1] == false)) {
-                            tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
-                        //}
-                        
-                    } else if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetBottomLeftToTopRightBack') {
-                        //if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1] == false)) {
-                            tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
-                        //}
-                        
-                    } 
                 }
             }
 
             // far left column
             if (tileToTheLeft == null && y > 0) {
                 if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeft') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomLeftElement);
+                    contiguousGroups[contiguousGroups.length] = [];
+                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomLeftElement);
                     tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
                 }
             }
 
             if (tileToTheLeft != null) {
-                //contiguousGroups.forEach((group) => {
-                //    if (group.includes(tileToTheLeft.bottomRightElement)) {
-                //        group.push(tileMatrix[y][x].bottomLeftElement);
-                //    }
-                //    if (group.includes(tileToTheLeft.topRightElement)) {
-                //        group.push(tileMatrix[y][x].topLeftElement);
-                //    }
-                //})
+                contiguousGroups.forEach((group) => {
+                    if (group.includes(tileToTheLeft.bottomRightElement)) {
+                        group.push(tileMatrix[y][x].bottomLeftElement);
+                    }
+                    if (group.includes(tileToTheLeft.topRightElement)) {
+                        group.push(tileMatrix[y][x].topLeftElement);
+                    }
+                })
 
                 if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeft' && tileToTheLeft.bottomRightClass == 'truchetBottomRight') {
                     if (tileMatrix[y][x].cornerPieceBottom.colorGroup.includes(tileToTheLeft.cornerPieceBottom.colorGroup[tileToTheLeft.cornerPieceBottom.colorGroup.length - 1]) == false) {
@@ -367,14 +350,14 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             }
 
             if (tileAbove != null) {
-                //contiguousGroups.forEach((group) => {
-                //    if (group.includes(tileAbove.bottomLeftElement)) {
-                //        group.push(tileMatrix[y][x].topLeftElement);
-                //    }
-                //    if (group.includes(tileAbove.bottomRightElement)) {
-                //        group.push(tileMatrix[y][x].topRightElement);
-                //    }
-                //})
+                contiguousGroups.forEach((group) => {
+                    if (group.includes(tileAbove.bottomLeftElement)) {
+                        group.push(tileMatrix[y][x].topLeftElement);
+                    }
+                    if (group.includes(tileAbove.bottomRightElement)) {
+                        group.push(tileMatrix[y][x].topRightElement);
+                    }
+                })
 
                 if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileAbove.bottomLeftClass == 'truchetBottomLeft') {
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
@@ -423,8 +406,8 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             }
 
             if (tileMatrix[y][x].bottomRightClass == 'truchetBottomRight') {
-                //contiguousGroups[contiguousGroups.length] = [];
-                //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomRightElement);
+                contiguousGroups[contiguousGroups.length] = [];
+                contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomRightElement);
                 tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
             }
 
@@ -607,14 +590,9 @@ let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
     //console.log(flatJoinerArray);
     
     let onlyNonJoinedGroups = allGroups;
-    console.log("all groups:");
-    console.log(allGroups);
     flatJoinerArray.forEach((joinerGroup) => {
-        if (onlyNonJoinedGroups.includes(joinerGroup)) {
-            let index = onlyNonJoinedGroups.indexOf(joinerGroup);
+        let index = onlyNonJoinedGroups.indexOf(joinerGroup);
         onlyNonJoinedGroups.splice(index, 1);
-        }
-        
     })
 
         //console.log(onlyNonJoinedGroups);

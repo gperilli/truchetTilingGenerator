@@ -289,14 +289,14 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
                     //tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
                     if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetTopRight') {
-                        //if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1] == false)) {
+                        if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1] == false)) {
                             tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
-                        //}
+                        }
                         
                     } else if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetBottomLeftToTopRightBack') {
-                        //if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1] == false)) {
+                        if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1] == false)) {
                             tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
-                        //}
+                        }
                         
                     } 
                 }
@@ -667,9 +667,9 @@ let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
             //console.log(part);
             if (part.className.baseVal == 'truchetBottomLeftToTopRightBack' || part.className.baseVal == 'truchetBottomRightToTopLeftBack') {
                 // console.log("bang");
-                part.style.background = randHexColor;
+                part.style.background = "blue";
             } else {
-                part.style.fill = randHexColor;
+                part.style.fill = "blue";
             }
         })
     });
@@ -681,9 +681,9 @@ let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
             //console.log(part);
             if (part.className.baseVal == 'truchetBottomLeftToTopRightBack' || part.className.baseVal == 'truchetBottomRightToTopLeftBack') {
                 // console.log("bang");
-                part.style.background = randHexColor;
+                part.style.background = "red";
             } else {
-                part.style.fill = randHexColor;
+                part.style.fill = "red";
             }
         })
     });

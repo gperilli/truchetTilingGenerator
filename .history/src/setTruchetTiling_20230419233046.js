@@ -279,47 +279,30 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             // top row
             if (tileAbove == null && x > 0) {
                 if (tileMatrix[y][x].topRightClass == 'truchetTopRight') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
+                    contiguousGroups[contiguousGroups.length] = [];
+                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
                     tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
-                }
-
-                if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
-                    //tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
-                    if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetTopRight') {
-                        //if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1] == false)) {
-                            tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
-                        //}
-                        
-                    } else if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetBottomLeftToTopRightBack') {
-                        //if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1] == false)) {
-                            tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
-                        //}
-                        
-                    } 
                 }
             }
 
             // far left column
             if (tileToTheLeft == null && y > 0) {
                 if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeft') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomLeftElement);
+                    contiguousGroups[contiguousGroups.length] = [];
+                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomLeftElement);
                     tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
                 }
             }
 
             if (tileToTheLeft != null) {
-                //contiguousGroups.forEach((group) => {
-                //    if (group.includes(tileToTheLeft.bottomRightElement)) {
-                //        group.push(tileMatrix[y][x].bottomLeftElement);
-                //    }
-                //    if (group.includes(tileToTheLeft.topRightElement)) {
-                //        group.push(tileMatrix[y][x].topLeftElement);
-                //    }
-                //})
+                contiguousGroups.forEach((group) => {
+                    if (group.includes(tileToTheLeft.bottomRightElement)) {
+                        group.push(tileMatrix[y][x].bottomLeftElement);
+                    }
+                    if (group.includes(tileToTheLeft.topRightElement)) {
+                        group.push(tileMatrix[y][x].topLeftElement);
+                    }
+                })
 
                 if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeft' && tileToTheLeft.bottomRightClass == 'truchetBottomRight') {
                     if (tileMatrix[y][x].cornerPieceBottom.colorGroup.includes(tileToTheLeft.cornerPieceBottom.colorGroup[tileToTheLeft.cornerPieceBottom.colorGroup.length - 1]) == false) {
@@ -367,14 +350,14 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             }
 
             if (tileAbove != null) {
-                //contiguousGroups.forEach((group) => {
-                //    if (group.includes(tileAbove.bottomLeftElement)) {
-                //        group.push(tileMatrix[y][x].topLeftElement);
-                //    }
-                //    if (group.includes(tileAbove.bottomRightElement)) {
-                //        group.push(tileMatrix[y][x].topRightElement);
-                //    }
-                //})
+                contiguousGroups.forEach((group) => {
+                    if (group.includes(tileAbove.bottomLeftElement)) {
+                        group.push(tileMatrix[y][x].topLeftElement);
+                    }
+                    if (group.includes(tileAbove.bottomRightElement)) {
+                        group.push(tileMatrix[y][x].topRightElement);
+                    }
+                })
 
                 if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileAbove.bottomLeftClass == 'truchetBottomLeft') {
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
@@ -423,8 +406,8 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             }
 
             if (tileMatrix[y][x].bottomRightClass == 'truchetBottomRight') {
-                //contiguousGroups[contiguousGroups.length] = [];
-                //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomRightElement);
+                contiguousGroups[contiguousGroups.length] = [];
+                contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomRightElement);
                 tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
             }
 
@@ -481,7 +464,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     const groupsToJoinSetArray = new Set(groupsToJoin.map(x => JSON.stringify(x)))
     const groupsToJoinUniqArray = [...groupsToJoinSetArray].map(x => JSON.parse(x))
 
-    //console.log(uniquegroupsToJoin);
+    console.log(uniquegroupsToJoin);
     
     let unsortedArray = groupsToJoinUniqArray;
     let joinerArray = [];
@@ -540,18 +523,22 @@ joinerArray.forEach((joinerArraySubArray) => {
     joinerArraySubArray.sort()
 })
 
-const removeDuplicates = (arr = []) => {
-    const map = new Map();
-    arr.forEach((x) => map.set(JSON.stringify(x), x));
-    arr = [...map.values()];
-    return arr;
-};
-
-let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
-
-//console.log(
-//    removeDuplicates(duplicateRemovedJoinerArray)
-//);
+for (let i = 0; i < joinerArray.length; i++) {
+    let l = 0;
+    for (let j = 0; j < joinerArray.length; j++) {
+        if (i != j) {
+            for (var k = 0; k < joinerArray[i].length; ++k) {
+                if (joinerArray[i][k] == joinerArray[j][k]) {
+                    l++
+                }
+            }
+        }
+    }
+    if (l == joinerArray[i].length) {
+        console.log("bang");
+        joinerArray.splice(i, 1)
+    }
+}
     
 
 
@@ -560,24 +547,27 @@ let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
         
     //})
 
-    //console.log(duplicateRemovedJoinerArray);
-    
+    //console.log(joinerArray);
 
-
-
-    //console.log(Array.from(new Set(input.map(JSON.stringify)), JSON.parse));
     //allGroups
 
+    let flatJoinerArray = joinerArray.flat();
+    //console.log(flatJoinerArray);
     
+    let onlyNonJoinedGroups = allGroups;
+    flatJoinerArray.forEach((joinerGroup) => {
+        let index = onlyNonJoinedGroups.indexOf(joinerGroup);
+        onlyNonJoinedGroups.splice(index, 1);
+    })
 
 
     //let contiguousColorGroups = joinerArray.concat(onlyNonJoinedGroups);
 
     contiguousGroups = [];
     //myMergedArr.forEach((contiguousGroup) => {
-        for (let i = 0; i < duplicateRemovedJoinerArray.length; i++) {
+        for (let i = 0; i < joinerArray.length; i++) {
             contiguousGroups[i] = [];
-            duplicateRemovedJoinerArray[i].forEach((groupNumber) => {
+            joinerArray[i].forEach((groupNumber) => {
                 for (let y = 0; y < truchetRows; y++) {
                     for (let x = 0; x < truchetRows; x++) {
                         tileMatrix[y][x].backPiece.colorGroup.forEach((group) => {
@@ -602,20 +592,6 @@ let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
                 }
             })
         }
-
-        let flatJoinerArray = duplicateRemovedJoinerArray.flat();
-    //console.log(flatJoinerArray);
-    
-    let onlyNonJoinedGroups = allGroups;
-    console.log("all groups:");
-    console.log(allGroups);
-    flatJoinerArray.forEach((joinerGroup) => {
-        if (onlyNonJoinedGroups.includes(joinerGroup)) {
-            let index = onlyNonJoinedGroups.indexOf(joinerGroup);
-        onlyNonJoinedGroups.splice(index, 1);
-        }
-        
-    })
 
         //console.log(onlyNonJoinedGroups);
         let onlyNonJoinedContiguousGroups = [];
@@ -649,14 +625,8 @@ let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
             //})
         }
         //console.log(onlyNonJoinedContiguousGroups);
-    
-    //console.log(allGroups);
-    console.log("tile matri:x");
-    console.log(tileMatrix);
-    console.log("non joined groups:");
-    console.log(onlyNonJoinedGroups);
-    console.log("joined groups:");
-    console.log(duplicateRemovedJoinerArray);
+
+    //console.log(onlyNonJoinedGroups);
     //console.log(contiguousGroups);
     //let allContiguousGroups = contiguousGroups.concat(onlyNonJoinedContiguousGroups);
     

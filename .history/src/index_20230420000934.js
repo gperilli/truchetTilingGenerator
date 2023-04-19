@@ -23,7 +23,7 @@ if (localStorage.getItem("truchetSettings") == null || localStorage.getItem("tru
     }))
 }
 const truchetSettings = JSON.parse(localStorage.getItem("truchetSettings"))
-//console.log(truchetSettings);
+console.log(truchetSettings);
 
 /////////////////////////////////////////////
 // on load / on resize

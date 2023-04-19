@@ -23,7 +23,7 @@ if (localStorage.getItem("truchetSettings") == null || localStorage.getItem("tru
     }))
 }
 const truchetSettings = JSON.parse(localStorage.getItem("truchetSettings"))
-//console.log(truchetSettings);
+console.log(truchetSettings);
 
 /////////////////////////////////////////////
 // on load / on resize
@@ -64,7 +64,7 @@ const obj = {
 
 gui.add( obj, 'density', 3, 50 ).onChange( value => {
     truchetSettings.tileDensity = Math.floor(value);
-    //console.log(truchetSettings)
+    console.log(truchetSettings)
     localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
     document.querySelector(`#${tilingArea}`).remove()
     setTruchetBlockLayout(topLevelContainer, truchetSettings)

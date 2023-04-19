@@ -667,9 +667,9 @@ let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
             //console.log(part);
             if (part.className.baseVal == 'truchetBottomLeftToTopRightBack' || part.className.baseVal == 'truchetBottomRightToTopLeftBack') {
                 // console.log("bang");
-                part.style.background = randHexColor;
+                part.style.background = "blue";
             } else {
-                part.style.fill = randHexColor;
+                part.style.fill = "blue";
             }
         })
     });
@@ -681,9 +681,9 @@ let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
             //console.log(part);
             if (part.className.baseVal == 'truchetBottomLeftToTopRightBack' || part.className.baseVal == 'truchetBottomRightToTopLeftBack') {
                 // console.log("bang");
-                part.style.background = randHexColor;
+                part.style.background = "red";
             } else {
-                part.style.fill = randHexColor;
+                part.style.fill = "red";
             }
         })
     });

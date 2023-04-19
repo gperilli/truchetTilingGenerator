@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+The content of the body element is displayed in your browser.
+<br>
+<span id="output"></span>
+</body>
+
+</html>
+
+<script>
+
+let unsortedArray = [
+	[3, 7],
+    [5, 7],
+    [3, 2],
+    [6, 7],
+    [4, 9],
+    [9, 8],
+    [10, 3],
+    [11, 12],
+    [12, 2],
+    [12, 16],
+    [13, 14],
+    [14, 15],
+    [16, 200],
+    [3, 23]
+]
+
+let joinerArray = [];
+let labeledArray = [];
+for (let i = 0; i < unsortedArray.length; i++) {
+    labeledArray[i] = {group: unsortedArray[i], sorted: false}
+}
+
+
+labeledArray.forEach((labeledChunk) => {
+    
+    if (labeledChunk.sorted == false) {
+        joinerArray.forEach((joinerSubArray) => {
+            joinerSubArray.forEach((joinerSubArrayItem) => {
+                if (joinerSubArrayItem == labeledChunk.group[0]) {
+                    if (joinerSubArray.includes(labeledChunk.group[0]) == false) {
+                        joinerSubArray.push(labeledChunk.group[0]);    
+                    }
+                    joinerSubArray.push(labeledChunk.group[1]);
+                    labeledChunk.sorted = true;
+                } else if (joinerSubArrayItem == labeledChunk.group[1]) {
+                    if (joinerSubArray.includes(labeledChunk.group[1]) == false) {
+                        joinerSubArray.push(labeledChunk.group[1]);    
+                    }
+                    joinerSubArray.push(labeledChunk.group[0]);
+                    labeledChunk.sorted = true;
+                } 
+            })
+        })
+
+        if (labeledChunk.sorted == false) {
+            joinerArray.push(labeledChunk.group);
+            labeledChunk.sorted = true;
+        }
+    }
+
+    joinerArray.forEach((joinerSubArray) => {
+        joinerArray.forEach((joinerSubArrayComparison) => {
+            if (joinerSubArray != joinerSubArrayComparison) {
+                joinerSubArray.forEach((joinerSubArrayItem) => {
+                    if (joinerSubArrayComparison.includes(joinerSubArrayItem)) {
+                        joinerSubArrayComparison.forEach((joinerSubArrayComparisonItem) => {
+                            if (joinerSubArray.includes(joinerSubArrayComparisonItem) == false) {
+                                joinerSubArray.push(joinerSubArrayComparisonItem)
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    })
+    
+})
+
+joinerArray.forEach((joinerArraySubArray) => {
+    joinerArraySubArray.sort()
+})
+
+
+
+
+
+let outputArray = [[1, 2], [3, 4], [5, 6]];
+
+joinerArray.forEach((subArray) => {
+document.querySelector("#output").insertAdjacentHTML("beforeend", `<span>${subArray}</span><br>`)
+})
+
+
+
+</script>
