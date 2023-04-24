@@ -13,20 +13,18 @@ class TruchetTile {
         this.blockContainer.setAttribute("height", tileWidth);
         this.blockContainer.setAttribute("width", tileWidth);
         this.blockContainer.style.position = "absolute";
-        this.tileType = Math.floor(Math.random() * 2);
+        this.tileType = Math.floor(Math.random() * 2) == 0 ? 'a' : 'b';
         
         this.topLeft;
         this.topRight;
         this.botttomLeft;
         this.bottomRight;
 
-        // this.blockContainer.setAttribute('class', 'truchetBack');
         this.topLeftClass;
         this.topRightClass;
         this.botttomLeftClass;
         this.bottomRightClass;
 
-        
         this.topLeftElement;
         this.topRightElement;
         this.botttomLeftElement;
@@ -41,7 +39,7 @@ class TruchetTile {
 
     init() {
 
-        if (this.tileType == 0) {
+        if (this.tileType == 'a') {
             this.createTileA()
         } else {
             this.createTileB()
@@ -51,6 +49,14 @@ class TruchetTile {
     }
 
     createTileA()
+    
+    // tileType == 'a'
+    //   _ _ _
+    //  |_|   |  truchetTopLeft
+    //  |    _|
+    //  |_ _|_|  truchetBottomRight
+    //
+
     {
         this.createPieSlice({ 
             centreX: this.tileWidth, 
@@ -68,6 +74,7 @@ class TruchetTile {
             fillColour: "#ccc" } );
         this.bottomRightClass = 'truchetBottomRight';
         this.bottomRight.setAttribute('class', 'truchetBottomRight');
+        
         this.createPieSlice({ 
             centreX: 0, 
             centreY: 0, 
@@ -93,6 +100,14 @@ class TruchetTile {
     }
 
     createTileB()
+
+    // tileType == 'b'
+    //   _ _ _
+    //  |   |_|  truchetTopRight
+    //  |_    |
+    //  |_|_ _|  truchetBottomLeft
+    //
+
     {
         this.createPieSlice({ 
             centreX: this.tileWidth, 
@@ -165,278 +180,180 @@ class TruchetTile {
 
     setTruchetTileDomElements() {
 
-        // console.log(document.querySelectorAll(`.${this.topLeftClass}`));
-        // console.log(document.querySelectorAll(`.${this.topLeftClass}`).length);
         let topLeftElements = document.querySelectorAll(`.${this.topLeftClass}`);
         this.topLeftElement = topLeftElements[topLeftElements.length -1];
-        if (this.topLeftClass == "truchetBottomRightToTopLeftBack") {
+        let bottomRightElements = document.querySelectorAll(`.${this.bottomRightClass}`);
+        this.bottomRightElement = bottomRightElements[bottomRightElements.length -1];
+
+        if (this.tileType == "b") {
             this.backPiece.element = this.topLeftElement;
+            this.backPiece.element = this.bottomRightElement;
         } else {
             this.cornerPieceTop.element = this.topLeftElement;
+            this.cornerPieceBottom.element = this.bottomRightElement;
         }
         
+
         let topRightElements = document.querySelectorAll(`.${this.topRightClass}`);
         this.topRightElement = topRightElements[topRightElements.length -1];
-        if (this.topRightClass == "truchetBottomLeftToTopRightBack") {
-            this.backPiece.element = this.topRightElement;
-        } else {
-            this.cornerPieceTop.element = this.topRightElement;
-        }
-
         let bottomLeftElements = document.querySelectorAll(`.${this.bottomLeftClass}`);
         this.bottomLeftElement = bottomLeftElements[bottomLeftElements.length -1];
-        if (this.bottomLeftClass == "truchetBottomLeftToTopRightBack") {
+        
+        if (this.tileType == "a") {
+            this.backPiece.element = this.topRightElement;
             this.backPiece.element = this.bottomLeftElement;
         } else {
+            this.cornerPieceTop.element = this.topRightElement;
             this.cornerPieceBottom.element = this.bottomLeftElement;
         }
 
-        let bottomRightElements = document.querySelectorAll(`.${this.bottomRightClass}`);
-        this.bottomRightElement = bottomRightElements[bottomRightElements.length -1];
-        if (this.bottomRightClass == "truchetBottomRightToTopLeftBack") {
-            this.backPiece.element = this.bottomRightElement;
-        } else {
-            this.cornerPieceBottom.element = this.bottomRightElement;
-        }
     }
 }
 
 function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSettings) {
     var tilingArea = containerSquare;
-    let truchetRows = truchetSettings["tileDensity"];
+    let mosaicSize = truchetSettings["tileDensity"];
     const tileWidth = tilingAreaWidthLength / truchetSettings["tileDensity"];
     
+    // create mosaic matrix
     let tileMatrix = [];
-    //let blockCount = -1;
-    for (let j = 0; j < truchetRows; j++) {
+    for (let j = 0; j < mosaicSize; j++) {
         tileMatrix[j] = [];
-
-        for (let i = 0; i < truchetRows; i++) {
+        for (let i = 0; i < mosaicSize; i++) {
             tileMatrix[j][i] = new TruchetTile(tileWidth, truchetSettings);
             tileMatrix[j][i].blockContainer.style.top = `${(tileWidth * j)}px`;
             tileMatrix[j][i].blockContainer.style.left = `${(tileWidth * i)}px`;
-            
             tilingArea.insertAdjacentHTML("beforeend", tileMatrix[j][i].blockContainer.outerHTML);
             tileMatrix[j][i].setTruchetTileDomElements();
         }
     }
 
-    // tileMatrix[5][5].blockContainer.style.background = "yellow";
-    //console.log(tileMatrix[0][0]);
+    // create color groups based on contiguous parts
     let colorGroups = 0;
-    let contiguousGroups = [];
     let tileToTheLeft = null;
     let tileAbove = null;
-    for (let y = 0; y < truchetRows; y++) {
-        for (let x = 0; x < truchetRows; x++) {
+    for (let y = 0; y < mosaicSize; y++) {
+        for (let x = 0; x < mosaicSize; x++) {
             
-            if (x > 0) {
-                tileToTheLeft = tileMatrix[y][x - 1]
-            } else {
-                // far left column - not top left corner - not bottom left corner
-                tileToTheLeft = null;
-            } 
+            tileToTheLeft = x > 0 ? tileMatrix[y][x - 1] : null;            
+            tileAbove = y > 0 ? tileMatrix[y - 1][x] : null;
             
-            if (y > 0) {
-                tileAbove = tileMatrix[y - 1][x];
-            } else {
-                // top row - not top left corner - not top right corner
-                tileAbove = null;
-            }
-
             if (x == 0 && y == 0) {
-                // tile type 1
-                if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft') {
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topLeftElement); // top corner
+                // tile type 'a'
+                if (tileMatrix[y][x].tileType == "a") {
                     tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
-                    
-                    // contiguousGroups[contiguousGroups.length] = [];
-                    // contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomRightElement); // bottom corner
-                    // tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
-
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomLeftElement); // back piece
                     tileMatrix[y][x].backPiece.colorGroup.push(colorGroups++);
                 }
 
-                // tile type 2
-                if (tileMatrix[y][x].topRightClass == 'truchetTopRight') {
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
+                // tile type 'b'
+                if (tileMatrix[y][x].tileType == "b") {
                     tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
-
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomLeftElement);
                     tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
-                    
-                    contiguousGroups[contiguousGroups.length] = [];
-                    contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomRightElement);
                     tileMatrix[y][x].backPiece.colorGroup.push(colorGroups++);
                 }
             } 
-            
+
             // top row
             if (tileAbove == null && x > 0) {
-                if (tileMatrix[y][x].topRightClass == 'truchetTopRight') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
+                if (tileMatrix[y][x].tileType == "b") {
                     tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
                 }
 
-                if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].topRightElement);
-                    //tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
-                    if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetTopRight') {
-                        //if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1] == false)) {
-                            tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
-                        //}
-                        
-                    } else if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetBottomLeftToTopRightBack') {
-                        //if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1] == false)) {
-                            tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
-                        //}
-                        
-                    } 
+                if (tileMatrix[y][x].tileType == "a" && tileToTheLeft.tileType == "b") {
+                        tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
+                } else if (tileMatrix[y][x].tileType == "a" && tileToTheLeft.tileType == "a") {
+                    tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
                 }
             }
 
             // far left column
             if (tileToTheLeft == null && y > 0) {
-                if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeft') {
-                    //contiguousGroups[contiguousGroups.length] = [];
-                    //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomLeftElement);
+                if (tileMatrix[y][x].tileType == "b") {
                     tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
                 }
             }
 
             if (tileToTheLeft != null) {
-                //contiguousGroups.forEach((group) => {
-                //    if (group.includes(tileToTheLeft.bottomRightElement)) {
-                //        group.push(tileMatrix[y][x].bottomLeftElement);
-                //    }
-                //    if (group.includes(tileToTheLeft.topRightElement)) {
-                //        group.push(tileMatrix[y][x].topLeftElement);
-                //    }
-                //})
 
-                if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeft' && tileToTheLeft.bottomRightClass == 'truchetBottomRight') {
+                if (tileMatrix[y][x].tileType == "b" && tileToTheLeft.tileType == "a") {
                     if (tileMatrix[y][x].cornerPieceBottom.colorGroup.includes(tileToTheLeft.cornerPieceBottom.colorGroup[tileToTheLeft.cornerPieceBottom.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].cornerPieceBottom.colorGroup.push(tileToTheLeft.cornerPieceBottom.colorGroup[tileToTheLeft.cornerPieceBottom.colorGroup.length - 1]);
                     }
-                    
-                } else if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeft' && tileToTheLeft.bottomRightClass == 'truchetBottomRightToTopLeftBack') {
-                    if (tileMatrix[y][x].cornerPieceBottom.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]) == false) {
-                        tileMatrix[y][x].cornerPieceBottom.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
-                    }
-                    
-                } else if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeftToTopRightBack' && tileToTheLeft.bottomRightClass == 'truchetBottomRight') {
-                    if (tileMatrix[y][x].backPiece.colorGroup.includes(tileToTheLeft.cornerPieceBottom.colorGroup[tileToTheLeft.cornerPieceBottom.colorGroup.length - 1]) == false) {
-                        tileMatrix[y][x].backPiece.colorGroup.push(tileToTheLeft.cornerPieceBottom.colorGroup[tileToTheLeft.cornerPieceBottom.colorGroup.length - 1]);
-                    }
-                    
-                } else if (tileMatrix[y][x].bottomLeftClass == 'truchetBottomLeftToTopRightBack' && tileToTheLeft.bottomRightClass == 'truchetBottomRightToTopLeftBack') {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
                     }
-                    
-                }
-
-                if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetTopRight') {
-                    if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1] == false)) {
-                        tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
+                } else if (tileMatrix[y][x].tileType == "b" && tileToTheLeft.tileType == "b") {
+                    if (tileMatrix[y][x].cornerPieceBottom.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]) == false) {
+                        tileMatrix[y][x].cornerPieceBottom.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
                     }
-                    
-                } else if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileToTheLeft.topRightClass == 'truchetBottomLeftToTopRightBack') {
+                    if (tileMatrix[y][x].backPiece.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]) == false) {
+                        tileMatrix[y][x].backPiece.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
+                    }
+                } else if (tileMatrix[y][x].tileType == "a" && tileToTheLeft.tileType == "a") {
+                    if (tileMatrix[y][x].backPiece.colorGroup.includes(tileToTheLeft.cornerPieceBottom.colorGroup[tileToTheLeft.cornerPieceBottom.colorGroup.length - 1]) == false) {
+                        tileMatrix[y][x].backPiece.colorGroup.push(tileToTheLeft.cornerPieceBottom.colorGroup[tileToTheLeft.cornerPieceBottom.colorGroup.length - 1]);
+                    }
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1] == false)) {
                         tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
                     }
                     
-                } else if (tileMatrix[y][x].topLeftClass == 'truchetBottomRightToTopLeftBack' && tileToTheLeft.topRightClass == 'truchetTopRight') {
-                    if (tileMatrix[y][x].backPiece.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]) == false) {
-                        tileMatrix[y][x].backPiece.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
-                    }
-                    
-                } else if (tileMatrix[y][x].topLeftClass == 'truchetBottomRightToTopLeftBack' && tileToTheLeft.topRightClass == 'truchetBottomLeftToTopRightBack') {
+                } else if (tileMatrix[y][x].tileType == "a" && tileToTheLeft.tileType == "b") {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
                     }
-                    
+                    if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1] == false)) {
+                        tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
+                    }
                 }
             }
 
             if (tileAbove != null) {
-                //contiguousGroups.forEach((group) => {
-                //    if (group.includes(tileAbove.bottomLeftElement)) {
-                //        group.push(tileMatrix[y][x].topLeftElement);
-                //    }
-                //    if (group.includes(tileAbove.bottomRightElement)) {
-                //        group.push(tileMatrix[y][x].topRightElement);
-                //    }
-                //})
 
-                if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileAbove.bottomLeftClass == 'truchetBottomLeft') {
+                if (tileMatrix[y][x].tileType == "a" && tileAbove.tileType == "b") {
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]);
                     }
-                    
-                } else if (tileMatrix[y][x].topLeftClass == 'truchetTopLeft' && tileAbove.bottomLeftClass == 'truchetBottomLeftToTopRightBack') {
-                    if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
-                        tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
-                    }
-                    
-                } else if (tileMatrix[y][x].topLeftClass == 'truchetBottomRightToTopLeftBack' && tileAbove.bottomLeftClass == 'truchetBottomLeft') {
-                    if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
-                        tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]);
-                    }
-                    
-                } else if (tileMatrix[y][x].topLeftClass == 'truchetBottomRightToTopLeftBack' && tileAbove.bottomLeftClass == 'truchetBottomLeftToTopRightBack') {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
                     }
                     
-                }
-
-                if (tileMatrix[y][x].topRightClass == 'truchetTopRight' && tileAbove.bottomRightClass == 'truchetBottomRight') {
-                    if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
-                        tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]);
-                    }
-                    
-                } else if (tileMatrix[y][x].topRightClass == 'truchetTopRight' && tileAbove.bottomRightClass == 'truchetBottomRightToTopLeftBack') {
+                } else if (tileMatrix[y][x].tileType == "a" && tileAbove.tileType == "a") {
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
                     }
-                    
-                } else if (tileMatrix[y][x].topRightClass == 'truchetBottomLeftToTopRightBack' && tileAbove.bottomRightClass == 'truchetBottomRight') {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]);
                     }
                     
-                } else if (tileMatrix[y][x].topRightClass == 'truchetBottomLeftToTopRightBack' && tileAbove.bottomRightClass == 'truchetBottomRightToTopLeftBack') {
+                } else if (tileMatrix[y][x].tileType == "b" && tileAbove.tileType == "a") {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
                     }
-                    
-                }
+                    if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
+                        tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]);
+                    }
+                } else if (tileMatrix[y][x].tileType == "b" && tileAbove.tileType == "b") {
+                    if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
+                        tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]);
+                    }
+                    if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
+                        tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
+                    }
+                } 
 
             }
 
-            if (tileMatrix[y][x].bottomRightClass == 'truchetBottomRight') {
-                //contiguousGroups[contiguousGroups.length] = [];
-                //contiguousGroups[contiguousGroups.length - 1].push(tileMatrix[y][x].bottomRightElement);
+            if (tileMatrix[y][x].tileType == "a") {
                 tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
             }
-
-            //console.log(`colorGroups: ${colorGroups}`);
         }
     }
 
-
+    // get color groups that need to be joined
     let groupsToJoin = [];
     let allGroups = [];
-    for (let y = 0; y < truchetRows; y++) {
-        for (let x = 0; x < truchetRows; x++) {
+    for (let y = 0; y < mosaicSize; y++) {
+        for (let x = 0; x < mosaicSize; x++) {
  
             if (tileMatrix[y][x].backPiece.colorGroup.length > 1) {
                 groupsToJoin.push(tileMatrix[y][x].backPiece.colorGroup);
@@ -448,7 +365,6 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                 }
             })
             
-
             if (tileMatrix[y][x].cornerPieceBottom.colorGroup.length > 1) {
                 groupsToJoin.push(tileMatrix[y][x].backPiece.colorGroup);
             } 
@@ -471,222 +387,168 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
 
         }
     }
-
-    //console.log(allGroups);
     
-    let uniquegroupsToJoin = [...new Set(groupsToJoin)];
-    //console.log(uniquegroupsToJoin);
-
+    //
   
     const groupsToJoinSetArray = new Set(groupsToJoin.map(x => JSON.stringify(x)))
     const groupsToJoinUniqArray = [...groupsToJoinSetArray].map(x => JSON.parse(x))
-
-    //console.log(uniquegroupsToJoin);
     
     let unsortedArray = groupsToJoinUniqArray;
     let joinerArray = [];
-let labeledArray = [];
-for (let i = 0; i < unsortedArray.length; i++) {
-    labeledArray[i] = {group: unsortedArray[i], sorted: false}
-}
-
-
-labeledArray.forEach((labeledChunk) => {
-    
-    if (labeledChunk.sorted == false) {
-        joinerArray.forEach((joinerSubArray) => {
-            joinerSubArray.forEach((joinerSubArrayItem) => {
-                if (joinerSubArrayItem == labeledChunk.group[0]) {
-                    if (joinerSubArray.includes(labeledChunk.group[0]) == false) {
-                        joinerSubArray.push(labeledChunk.group[0]);    
-                    }
-                    joinerSubArray.push(labeledChunk.group[1]);
-                    labeledChunk.sorted = true;
-                } else if (joinerSubArrayItem == labeledChunk.group[1]) {
-                    if (joinerSubArray.includes(labeledChunk.group[1]) == false) {
-                        joinerSubArray.push(labeledChunk.group[1]);    
-                    }
-                    joinerSubArray.push(labeledChunk.group[0]);
-                    labeledChunk.sorted = true;
-                } 
-            })
-        })
-
-        if (labeledChunk.sorted == false) {
-            joinerArray.push(labeledChunk.group);
-            labeledChunk.sorted = true;
-        }
+    let labeledArray = [];
+    for (let i = 0; i < unsortedArray.length; i++) {
+        labeledArray[i] = {group: unsortedArray[i], sorted: false}
     }
 
-    joinerArray.forEach((joinerSubArray) => {
-        joinerArray.forEach((joinerSubArrayComparison) => {
-            if (joinerSubArray != joinerSubArrayComparison) {
-                joinerSubArray.forEach((joinerSubArrayItem) => {
-                    if (joinerSubArrayComparison.includes(joinerSubArrayItem)) {
-                        joinerSubArrayComparison.forEach((joinerSubArrayComparisonItem) => {
-                            if (joinerSubArray.includes(joinerSubArrayComparisonItem) == false) {
-                                joinerSubArray.push(joinerSubArrayComparisonItem)
-                            }
-                        })
-                    }
-                })
-            }
-        })
-    })
-    
-})
 
-joinerArray.forEach((joinerArraySubArray) => {
-    joinerArraySubArray.sort()
-})
-
-const removeDuplicates = (arr = []) => {
-    const map = new Map();
-    arr.forEach((x) => map.set(JSON.stringify(x), x));
-    arr = [...map.values()];
-    return arr;
-};
-
-let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
-
-//console.log(
-//    removeDuplicates(duplicateRemovedJoinerArray)
-//);
-    
-
-
-    
-    
+    labeledArray.forEach((labeledChunk) => {
         
-    //})
-
-    //console.log(duplicateRemovedJoinerArray);
-    
-
-
-
-    //console.log(Array.from(new Set(input.map(JSON.stringify)), JSON.parse));
-    //allGroups
-
-    
-
-
-    //let contiguousColorGroups = joinerArray.concat(onlyNonJoinedGroups);
-
-    contiguousGroups = [];
-    //myMergedArr.forEach((contiguousGroup) => {
-        for (let i = 0; i < duplicateRemovedJoinerArray.length; i++) {
-            contiguousGroups[i] = [];
-            duplicateRemovedJoinerArray[i].forEach((groupNumber) => {
-                for (let y = 0; y < truchetRows; y++) {
-                    for (let x = 0; x < truchetRows; x++) {
-                        tileMatrix[y][x].backPiece.colorGroup.forEach((group) => {
-                            if (group == groupNumber) {
-                                contiguousGroups[i].push(tileMatrix[y][x].backPiece.element)
-                            }
-                        })
-
-                        tileMatrix[y][x].cornerPieceTop.colorGroup.forEach((group) => {
-                            if (group == groupNumber) {
-                                contiguousGroups[i].push(tileMatrix[y][x].cornerPieceTop.element)
-                            }
-                        })
-
-                        tileMatrix[y][x].cornerPieceBottom.colorGroup.forEach((group) => {
-                            if (group == groupNumber) {
-                                contiguousGroups[i].push(tileMatrix[y][x].cornerPieceBottom.element)
-                            }
-                        })
-
-                    }
-                }
+        if (labeledChunk.sorted == false) {
+            joinerArray.forEach((joinerSubArray) => {
+                joinerSubArray.forEach((joinerSubArrayItem) => {
+                    if (joinerSubArrayItem == labeledChunk.group[0]) {
+                        if (joinerSubArray.includes(labeledChunk.group[0]) == false) {
+                            joinerSubArray.push(labeledChunk.group[0]);    
+                        }
+                        joinerSubArray.push(labeledChunk.group[1]);
+                        labeledChunk.sorted = true;
+                    } else if (joinerSubArrayItem == labeledChunk.group[1]) {
+                        if (joinerSubArray.includes(labeledChunk.group[1]) == false) {
+                            joinerSubArray.push(labeledChunk.group[1]);    
+                        }
+                        joinerSubArray.push(labeledChunk.group[0]);
+                        labeledChunk.sorted = true;
+                    } 
+                })
             })
+
+            if (labeledChunk.sorted == false) {
+                joinerArray.push(labeledChunk.group);
+                labeledChunk.sorted = true;
+            }
         }
 
-        let flatJoinerArray = duplicateRemovedJoinerArray.flat();
-    //console.log(flatJoinerArray);
-    
+        joinerArray.forEach((joinerSubArray) => {
+            joinerArray.forEach((joinerSubArrayComparison) => {
+                if (joinerSubArray != joinerSubArrayComparison) {
+                    joinerSubArray.forEach((joinerSubArrayItem) => {
+                        if (joinerSubArrayComparison.includes(joinerSubArrayItem)) {
+                            joinerSubArrayComparison.forEach((joinerSubArrayComparisonItem) => {
+                                if (joinerSubArray.includes(joinerSubArrayComparisonItem) == false) {
+                                    joinerSubArray.push(joinerSubArrayComparisonItem)
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        })
+        
+    })
+
+    joinerArray.forEach((joinerArraySubArray) => {
+        joinerArraySubArray.sort()
+    })
+
+    function removeDuplicates(arr = []) {
+        const map = new Map();
+        arr.forEach((x) => map.set(JSON.stringify(x), x));
+        arr = [...map.values()];
+        return arr;
+    };
+
+    let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
+
+
+    // create arrays of contiguous DOM elements
+    let contiguousGroups = [];
+    for (let i = 0; i < duplicateRemovedJoinerArray.length; i++) {
+        contiguousGroups[i] = [];
+        duplicateRemovedJoinerArray[i].forEach((groupNumber) => {
+            for (let y = 0; y < mosaicSize; y++) {
+                for (let x = 0; x < mosaicSize; x++) {
+                    tileMatrix[y][x].backPiece.colorGroup.forEach((group) => {
+                        if (group == groupNumber) {
+                            contiguousGroups[i].push(tileMatrix[y][x].backPiece.element)
+                        }
+                    })
+                    tileMatrix[y][x].cornerPieceTop.colorGroup.forEach((group) => {
+                        if (group == groupNumber) {
+                            contiguousGroups[i].push(tileMatrix[y][x].cornerPieceTop.element)
+                        }
+                    })
+                    tileMatrix[y][x].cornerPieceBottom.colorGroup.forEach((group) => {
+                        if (group == groupNumber) {
+                            contiguousGroups[i].push(tileMatrix[y][x].cornerPieceBottom.element)
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    // get color groups that were not joined
+    let flatJoinerArray = duplicateRemovedJoinerArray.flat();
     let onlyNonJoinedGroups = allGroups;
-    console.log("all groups:");
-    console.log(allGroups);
     flatJoinerArray.forEach((joinerGroup) => {
         if (onlyNonJoinedGroups.includes(joinerGroup)) {
             let index = onlyNonJoinedGroups.indexOf(joinerGroup);
         onlyNonJoinedGroups.splice(index, 1);
-        }
-        
+        }    
     })
 
-        //console.log(onlyNonJoinedGroups);
-        let onlyNonJoinedContiguousGroups = [];
-    //myMergedArr.forEach((contiguousGroup) => {
-        for (let i = 0; i < onlyNonJoinedGroups.length; i++) {
-            
-            //onlyNonJoinedGroups.forEach((groupNumber) => {
-                onlyNonJoinedContiguousGroups[i] = [];
-                for (let y = 0; y < truchetRows; y++) {
-                    for (let x = 0; x < truchetRows; x++) {
-                        tileMatrix[y][x].backPiece.colorGroup.forEach((group) => {
-                            if (group == onlyNonJoinedGroups[i]) {
-                                onlyNonJoinedContiguousGroups[i].push(tileMatrix[y][x].backPiece.element)
-                            }
-                        })
-
-                        tileMatrix[y][x].cornerPieceTop.colorGroup.forEach((group) => {
-                            if (group == onlyNonJoinedGroups[i]) {
-                                onlyNonJoinedContiguousGroups[i].push(tileMatrix[y][x].cornerPieceTop.element)
-                            }
-                        })
-
-                        tileMatrix[y][x].cornerPieceBottom.colorGroup.forEach((group) => {
-                            if (group == onlyNonJoinedGroups[i]) {
-                                onlyNonJoinedContiguousGroups[i].push(tileMatrix[y][x].cornerPieceBottom.element)
-                            }
-                        })
-
+    // create arrays of contiguous DOM elements
+    let onlyNonJoinedContiguousDomElements = [];
+    for (let i = 0; i < onlyNonJoinedGroups.length; i++) {
+        onlyNonJoinedContiguousDomElements[i] = [];
+        for (let y = 0; y < mosaicSize; y++) {
+            for (let x = 0; x < mosaicSize; x++) {
+                tileMatrix[y][x].backPiece.colorGroup.forEach((group) => {
+                    if (group == onlyNonJoinedGroups[i]) {
+                        onlyNonJoinedContiguousDomElements[i].push(tileMatrix[y][x].backPiece.element)
                     }
-                }
-            //})
-        }
-        //console.log(onlyNonJoinedContiguousGroups);
-    
-    //console.log(allGroups);
+                })
+                tileMatrix[y][x].cornerPieceTop.colorGroup.forEach((group) => {
+                    if (group == onlyNonJoinedGroups[i]) {
+                        onlyNonJoinedContiguousDomElements[i].push(tileMatrix[y][x].cornerPieceTop.element)
+                    }
+                })
+                tileMatrix[y][x].cornerPieceBottom.colorGroup.forEach((group) => {
+                    if (group == onlyNonJoinedGroups[i]) {
+                        onlyNonJoinedContiguousDomElements[i].push(tileMatrix[y][x].cornerPieceBottom.element)
+                    }
+                })
+            }
+        } 
+    }
+
+    console.log("all groups:");
+    console.log(allGroups);
     console.log("tile matri:x");
     console.log(tileMatrix);
     console.log("non joined groups:");
     console.log(onlyNonJoinedGroups);
     console.log("joined groups:");
     console.log(duplicateRemovedJoinerArray);
-    //console.log(contiguousGroups);
-    //let allContiguousGroups = contiguousGroups.concat(onlyNonJoinedContiguousGroups);
-    
-    // console.log(contiguousGroups);
+    console.log("contiguous groups:");
+    console.log(contiguousGroups);
+
+    function colorContiguousGroups(group) {
+        let randHexColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+        group.forEach((part) => {
+            if (part.className.baseVal == 'truchetBottomLeftToTopRightBack' || part.className.baseVal == 'truchetBottomRightToTopLeftBack') {
+                part.style.background = randHexColor;
+            } else {
+                part.style.fill = randHexColor;
+            }
+        })
+    }
+
     contiguousGroups.forEach((group) => {
-        let randHexColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-        group.forEach((part) => {
-            //console.log(part);
-            if (part.className.baseVal == 'truchetBottomLeftToTopRightBack' || part.className.baseVal == 'truchetBottomRightToTopLeftBack') {
-                // console.log("bang");
-                part.style.background = randHexColor;
-            } else {
-                part.style.fill = randHexColor;
-            }
-        })
+        colorContiguousGroups(group);
     });
     
-    //console.log(onlyNonJoinedContiguousGroups);
-    onlyNonJoinedContiguousGroups.forEach((group) => {
-        let randHexColor = "#" + Math.floor(Math.random()*16777215).toString(16);
-        group.forEach((part) => {
-            //console.log(part);
-            if (part.className.baseVal == 'truchetBottomLeftToTopRightBack' || part.className.baseVal == 'truchetBottomRightToTopLeftBack') {
-                // console.log("bang");
-                part.style.background = randHexColor;
-            } else {
-                part.style.fill = randHexColor;
-            }
-        })
+    onlyNonJoinedContiguousDomElements.forEach((group) => {
+        colorContiguousGroups(group);
     });
-
-
 }
