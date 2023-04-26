@@ -5,9 +5,11 @@ export { setTruchetTiling }
 
 class TruchetTile {
     constructor(tileWidth, truchetSettings) {
+        this.truchetSettings = truchetSettings;
         this.blockContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         this.blockContainer.style.background = "#ccc";
-        this.blockContainer.style.outline = "1px solid black";
+        //this.blockContainer.style.border = `${truchetSettings["tileEdgeWidth"]}px solid black`;
+        //this.blockContainer.style.boxSizing = "border-box";
         this.tileWidth = tileWidth;
         this.strokeWidth = 5;
         this.blockContainer.setAttribute("height", tileWidth);
@@ -45,6 +47,17 @@ class TruchetTile {
             this.createTileB()
         }
 
+        // <rect width="300" height="100" style="fill:rgb(0,0,255);stroke-width:3;stroke:rgb(0,0,0)" />
+        let rec = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rec.style.width = "100%";
+        rec.style.height = "100%";
+        rec.style.fill = this.truchetSettings["overlayColor"];
+        rec.style.fillOpacity = this.truchetSettings["overlayOpacity"];
+        rec.style.boxSizing = "border-box";
+        rec.style.stroke = this.truchetSettings["tileBorderColor"];
+        rec.style.strokeWidth = `${this.truchetSettings["tileBorderWidth"]}px`;
+        this.blockContainer.appendChild(rec);
+        console.log(this.truchetSettings["overlayOpacity"]);
         return this.blockContainer;
     }
 
@@ -59,35 +72,35 @@ class TruchetTile {
 
     {
         this.createPieSlice({ 
-            centreX: this.tileWidth, 
-            centreY: this.tileWidth, 
+            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
+            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
             startAngleRadians: degrees_to_radians(180) , 
             sweepAngleRadians: degrees_to_radians(90), 
-            radius: (this.tileWidth / 2) + (this.strokeWidth / 2), 
+            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
             fillColour: "#000" } ); //border
         this.bottomRight = this.createPieSlice({ 
-            centreX: this.tileWidth, 
-            centreY: this.tileWidth, 
+            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
+            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
             startAngleRadians: degrees_to_radians(180) , 
             sweepAngleRadians: degrees_to_radians(90), 
-            radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
+            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
             fillColour: "#ccc" } );
         this.bottomRightClass = 'truchetBottomRight';
         this.bottomRight.setAttribute('class', 'truchetBottomRight');
         
         this.createPieSlice({ 
-            centreX: 0, 
-            centreY: 0, 
+            centreX: 0 + this.truchetSettings["tileEdgeWidth"], 
+            centreY: 0 + this.truchetSettings["tileEdgeWidth"], 
             startAngleRadians: 0 , 
             sweepAngleRadians: degrees_to_radians(90), 
-            radius: (this.tileWidth / 2) + (this.strokeWidth / 2), 
+            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
             fillColour: "#000" } ); // border
         this.topLeft = this.createPieSlice({ 
-            centreX: 0, 
-            centreY: 0, 
+            centreX: 0 + this.truchetSettings["tileEdgeWidth"], 
+            centreY: 0 + this.truchetSettings["tileEdgeWidth"], 
             startAngleRadians: 0 , 
             sweepAngleRadians: degrees_to_radians(90), 
-            radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
+            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
             fillColour: "#ccc" } );
         this.topLeftClass = 'truchetTopLeft';
         this.topLeft.setAttribute('class', 'truchetTopLeft');
@@ -110,34 +123,34 @@ class TruchetTile {
 
     {
         this.createPieSlice({ 
-            centreX: this.tileWidth, 
-            centreY: 0, 
+            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
+            centreY: 0 + this.truchetSettings["tileEdgeWidth"], 
             startAngleRadians: degrees_to_radians(90), 
             sweepAngleRadians: degrees_to_radians(90), 
-            radius: (this.tileWidth / 2) + (this.strokeWidth / 2), 
+            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
             fillColour: "#000" }); // border
         this.topRight = this.createPieSlice({ 
-            centreX: this.tileWidth, 
-            centreY: 0, 
+            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
+            centreY: 0 + this.truchetSettings["tileEdgeWidth"], 
             startAngleRadians: degrees_to_radians(90), 
             sweepAngleRadians: degrees_to_radians(90), 
-            radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
+            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
             fillColour: "#ccc" });
         this.topRightClass = 'truchetTopRight';
         this.topRight.setAttribute('class', 'truchetTopRight');
         this.createPieSlice({ 
-            centreX: 0, 
-            centreY: this.tileWidth, 
+            centreX: 0 + this.truchetSettings["tileEdgeWidth"], 
+            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
             startAngleRadians: degrees_to_radians(270) , 
             sweepAngleRadians: degrees_to_radians(90), 
-            radius: (this.tileWidth / 2) + (this.strokeWidth / 2), 
+            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
             fillColour: "#000" });
         this.bottomLeft = this.createPieSlice({ 
-            centreX: 0, 
-            centreY: this.tileWidth, 
+            centreX: 0 + this.truchetSettings["tileEdgeWidth"], 
+            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
             startAngleRadians: degrees_to_radians(270), 
             sweepAngleRadians: degrees_to_radians(90), 
-            radius: (this.tileWidth / 2) - (this.strokeWidth / 2), 
+            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
             fillColour: "#ccc" });
         this.bottomLeftClass = 'truchetBottomLeft';
         this.bottomLeft.setAttribute('class', 'truchetBottomLeft');

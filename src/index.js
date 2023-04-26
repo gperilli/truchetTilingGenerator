@@ -17,6 +17,10 @@ if (localStorage.getItem("truchetSettings") == null || localStorage.getItem("tru
         tileDensity: 10, 
         tileEdgeWidth: 5,
         tileEdgeColor: "#000",
+        tileBorderWidth: 5,
+        tileBorderColor: "#000",
+        overlayColor: "#000",
+        overlayOpacity: 0.0,
         shapeEdgeWidth: 5,
         shapeEdgeColor: "#000",
         coloring: "Contiguous Group Colors",
@@ -62,6 +66,10 @@ const obj = {
     density: truchetSettings["tileDensity"], 
     tileEdgeWidth: truchetSettings["tileEdgeWidth"], 
     tileEdgeColor: truchetSettings["tileEdgeColor"], 
+    tileBorderWidth: truchetSettings["tileBorderWidth"], 
+    tileBorderColor: truchetSettings["tileBorderColor"], 
+    overlayColor: truchetSettings["overlayColor"], 
+    overlayOpacity: truchetSettings["overlayOpacity"], 
     coloring: camelConverter[truchetSettings.coloring], 
     shapeEdgeWidth: truchetSettings["shapeEdgeWidth"], 
     shapeEdgeColor: truchetSettings["shapeEdgeColor"], 
@@ -79,8 +87,8 @@ gui.add( obj, 'density', 3, 20, 1 ).onChange( value => {
 gui.add( obj, 'tileEdgeWidth', 0, 20, 1 ).onChange( value => {
     truchetSettings.tileEdgeWidth = Math.floor(value);
     localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
-    //document.querySelector(`#${tilingArea}`).remove()
-    //setTruchetBlockLayout(topLevelContainer, truchetSettings)
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
 });
 
 gui.addColor( obj, 'tileEdgeColor' ).onChange( value => {
@@ -89,6 +97,36 @@ gui.addColor( obj, 'tileEdgeColor' ).onChange( value => {
     localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
     //document.querySelector(`#${tilingArea}`).remove()
     //setTruchetBlockLayout(topLevelContainer, truchetSettings)
+});
+
+gui.add( obj, 'tileBorderWidth', 0, 20, 1 ).onChange( value => {
+    truchetSettings.tileBorderWidth = Math.floor(value);
+    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
+});
+
+gui.addColor( obj, 'tileBorderColor' ).onChange( value => {
+    truchetSettings.tileBorderColor = value;
+    console.log(truchetSettings)
+    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
+});
+
+gui.addColor( obj, 'overlayColor' ).onChange( value => {
+    truchetSettings.overlayColor = value;
+    console.log(truchetSettings)
+    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
+});
+
+gui.add( obj, 'overlayOpacity', 0, 1, 0.1 ).onChange( value => {
+    truchetSettings.overlayOpacity = value;
+    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
 });
 
 
