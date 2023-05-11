@@ -403,10 +403,12 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     
     //
   
-    const groupsToJoinSetArray = new Set(groupsToJoin.map(x => JSON.stringify(x)))
-    const groupsToJoinUniqArray = [...groupsToJoinSetArray].map(x => JSON.parse(x))
+    //const groupsToJoinSetArray = new Set(groupsToJoin.map(x => JSON.stringify(x)))
+    //const groupsToJoinUniqArray = [...groupsToJoinSetArray].map(x => JSON.parse(x))
     
-    let unsortedArray = groupsToJoinUniqArray;
+    let unsortedArray = groupsToJoin;
+    //console.log(groupsToJoin);
+    //console.log(unsortedArray);
     let joinerArray = [];
     let labeledArray = [];
     for (let i = 0; i < unsortedArray.length; i++) {
@@ -471,7 +473,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     };
 
     let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
-
+    console.log(duplicateRemovedJoinerArray);
 
     // create arrays of contiguous DOM elements
     let contiguousGroups = [];
@@ -535,16 +537,16 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
         } 
     }
 
-    console.log("all groups:");
-    console.log(allGroups);
-    console.log("tile matri:x");
-    console.log(tileMatrix);
-    console.log("non joined groups:");
-    console.log(onlyNonJoinedGroups);
-    console.log("joined groups:");
-    console.log(duplicateRemovedJoinerArray);
-    console.log("contiguous groups:");
-    console.log(contiguousGroups);
+    // console.log("all groups:");
+    // console.log(allGroups);
+    // console.log("tile matri:x");
+    // console.log(tileMatrix);
+    // console.log("non joined groups:");
+    // console.log(onlyNonJoinedGroups);
+    // console.log("joined groups:");
+    // console.log(duplicateRemovedJoinerArray);
+    // console.log("contiguous groups:");
+    // console.log(contiguousGroups);
 
     function colorContiguousGroups(group) {
         let randHexColor = "#" + Math.floor(Math.random()*16777215).toString(16);
