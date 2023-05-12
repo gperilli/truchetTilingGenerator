@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <body style="width: 100vw; height: 100vh; margin: 0px; overflow: hidden;">
+        <div style="background: #eee; position: absolute; overflow: hidden;" id="tileOuterContainer">
+            <div id="tileInnerContainer" style="outline: 1px solid black; background: #ccc; position: absolute;"></div>
+        </div>
+    </body>
+</html>
+
+<script>
+
+const topLevelContainer = document.querySelector("body");
+window.addEventListener( 'load', function(event) {
+    updateLayout(topLevelContainer);
+});
+
+window.addEventListener( 'resize', function(event) {
+    updateLayout(topLevelContainer)
+});
+
+function topLevelContainerSize(topLevelContainer) {
+    let topLevelContainerWidth = topLevelContainer.innerWidth || topLevelContainer.clientWidth;
+	let topLevelContainerHeight = topLevelContainer.innerHeight || topLevelContainer.clientHeight;
+    let topLevelContainerDimensions = {
+        width: topLevelContainerWidth,
+        height: topLevelContainerHeight
+    }
+    return topLevelContainerDimensions
+}
+
+let centralContainerSquareWidth, centralContainerXOffset, centralContainerYOffset;
+
+function portraitLandscapeSwitcher(isLandscape, screenWidth, screenHeight) {
+    if (isLandscape == true) {
+        // is landscape
+        centralContainerSquareWidth = screenHeight;
+        centralContainerXOffset = ((screenWidth - screenHeight) / 2) * 1;
+        centralContainerYOffset = 0;
+    } else {
+        // is portrait
+        centralContainerSquareWidth = screenWidth;
+        centralContainerXOffset = 0;
+        centralContainerYOffset = ((screenHeight - screenWidth) / 2) * 1;
+    }
+    let centralContainerParams = {
+        width: centralContainerSquareWidth,
+        height: centralContainerSquareWidth,
+        left: centralContainerXOffset,
+        top: centralContainerYOffset
+    }
+    return centralContainerParams
+}
+
+function updateLayout(topLevelContainer) {
+
+    // get screen size
+    let topLevelContainerDimensions = topLevelContainerSize(topLevelContainer)
+    document.querySelector("#tileInnerContainer").innerHTML = '';
+
+    let isLandscape = topLevelContainerDimensions.width > topLevelContainerDimensions.height;
+    let topLevelContainerParams = portraitLandscapeSwitcher(isLandscape, topLevelContainerDimensions.width, topLevelContainerDimensions.height)
+
+    let containerSquare = document.querySelector("#tileInnerContainer");
+    //containerSquare.innerHTML = topLevelContainerParams.width;
+    document.querySelector("#tileOuterContainer").style.width = topLevelContainerParams.width  + "px";
+    document.querySelector("#tileOuterContainer").style.height = topLevelContainerParams.height  + "px";
+    document.querySelector("#tileOuterContainer").style.left = topLevelContainerParams.left + "px";
+    document.querySelector("#tileOuterContainer").style.top = topLevelContainerParams.top + "px";
+
+    document.querySelector("#tileInnerContainer").style.width = (topLevelContainerParams.width * 0.9) + "px";
+    document.querySelector("#tileInnerContainer").style.height = (topLevelContainerParams.height * 0.9) + "px";
+    document.querySelector("#tileInnerContainer").style.left = (topLevelContainerParams.width * 0.05) + "px";
+    document.querySelector("#tileInnerContainer").style.top = (topLevelContainerParams.width * 0.05) + "px";
+
+    setTruchetTile(containerSquare, topLevelContainerParams.width) * 0.9;
+}
+
+
+function degreesToRadians(degrees) {
+    var pi = Math.PI;
+    return degrees * (pi/180);
+}
+
+function createPieSlice(settings, rec) {
+    let d = "";
+
+    const firstCircumferenceX = settings.centreX + settings.radius * Math.cos(settings.startAngleRadians);
+    const firstCircumferenceY = settings.centreY + settings.radius * Math.sin(settings.startAngleRadians);
+    const secondCircumferenceX = settings.centreX + settings.radius * Math.cos(settings.startAngleRadians + settings.sweepAngleRadians);
+    const secondCircumferenceY = settings.centreY + settings.radius * Math.sin(settings.startAngleRadians + settings.sweepAngleRadians);
+
+    // move to centre
+    d += "M" + settings.centreX + "," + settings.centreY + " ";
+    // line to first edge
+    d += "L" + firstCircumferenceX + "," + firstCircumferenceY + " ";
+    // arc
+    // Radius X, Radius Y, X Axis Rotation, Large Arc Flag, Sweep Flag, End X, End Y
+    d += "A" + settings.radius + "," + settings.radius + " 0 0,1 " + secondCircumferenceX + "," + secondCircumferenceY + " ";
+    // close path
+    d += "Z";
+
+    const arc = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+    arc.setAttributeNS(null, "d", d);
+    arc.setAttributeNS(null, "fill", settings.fillColour);
+    rec.appendChild(arc);
+    return arc;
+}
+
+function createTileA(blockContainer, squareWidth) {
+    // tileType == 'a'
+    //   _ _ _
+    //  |_|   |  truchetTopLeft
+    //  |    _|
+    //  |_ _|_|  truchetBottomRight
+    //
+
+    let rec = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    rec.style.width = '100%';
+    rec.style.height = '100%';
+    rec.style.fill = "#fff";
+    blockContainer.appendChild(rec);
+    let strokeWidth = 5;
+
+    //let bottomRightArcBorder = createPieSlice({
+    //    centreX: squareWidth,
+    //    centreY: squareWidth,
+    //    startAngleRadians: degreesToRadians(180) ,
+    //    sweepAngleRadians: degreesToRadians(90),
+    //    radius: ((squareWidth / 2) + (strokeWidth / 2)),
+    //    fillColour: "#000" } ); //border
+
+    let bottomRightArc = createPieSlice({
+        centreX: squareWidth,
+        centreY: squareWidth,
+        startAngleRadians: degreesToRadians(180) ,
+        sweepAngleRadians: degreesToRadians(90),
+        radius: ((squareWidth / 2) - (strokeWidth / 2)),
+        fillColour: "#ccc" }, rec );
+
+    blockContainer.appendChild(bottomRightArc);
+
+    //let topLeftArcBorder = createPieSlice({
+    //    centreX: 0,
+    //    centreY: 0,
+    //    startAngleRadians: 0 ,
+    //    sweepAngleRadians: degreesToRadians(90),
+    //    radius: ((squareWidth / 2) + (strokeWidth / 2)),
+    //    fillColour: "#000" } ); // border
+
+    let bottomLeftArc = createPieSlice({
+        centreX: 0,
+        centreY: 0,
+        startAngleRadians: 0 ,
+        sweepAngleRadians: degreesToRadians(90),
+        radius: ((squareWidth / 2) - (strokeWidth / 2)),
+        fillColour: "#ccc" }, rec );
+
+    blockContainer.appendChild(bottomLeftArc);
+}
+
+function setTruchetTile(containerSquare, containerSquareWidth) {
+    console.log(containerSquareWidth);
+    let blockContainer = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    blockContainer.style.width = '100%';
+    blockContainer.style.height = '100%';
+
+    createTileA(blockContainer, containerSquareWidth);
+
+    containerSquare.insertAdjacentHTML("beforeend", blockContainer.outerHTML);
+}
+
+</script>

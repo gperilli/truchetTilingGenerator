@@ -16,7 +16,7 @@ class TruchetTile {
         this.blockContainer.setAttribute("width", tileWidth);
         this.blockContainer.style.position = "absolute";
         this.tileType = Math.floor(Math.random() * 2) == 0 ? 'a' : 'b';
-        
+
         this.topLeft;
         this.topRight;
         this.botttomLeft;
@@ -62,7 +62,7 @@ class TruchetTile {
     }
 
     createTileA()
-    
+
     // tileType == 'a'
     //   _ _ _
     //  |_|   |  truchetTopLeft
@@ -71,36 +71,36 @@ class TruchetTile {
     //
 
     {
-        this.createPieSlice({ 
-            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
-            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
-            startAngleRadians: degrees_to_radians(180) , 
-            sweepAngleRadians: degrees_to_radians(90), 
-            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
+        this.createPieSlice({
+            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"],
+            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"],
+            startAngleRadians: degrees_to_radians(180) ,
+            sweepAngleRadians: degrees_to_radians(90),
+            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"],
             fillColour: "#000" } ); //border
-        this.bottomRight = this.createPieSlice({ 
-            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
-            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
-            startAngleRadians: degrees_to_radians(180) , 
-            sweepAngleRadians: degrees_to_radians(90), 
-            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
+        this.bottomRight = this.createPieSlice({
+            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"],
+            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"],
+            startAngleRadians: degrees_to_radians(180) ,
+            sweepAngleRadians: degrees_to_radians(90),
+            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"],
             fillColour: "#ccc" } );
         this.bottomRightClass = 'truchetBottomRight';
         this.bottomRight.setAttribute('class', 'truchetBottomRight');
-        
-        this.createPieSlice({ 
-            centreX: 0 + this.truchetSettings["tileEdgeWidth"], 
-            centreY: 0 + this.truchetSettings["tileEdgeWidth"], 
-            startAngleRadians: 0 , 
-            sweepAngleRadians: degrees_to_radians(90), 
-            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
+
+        this.createPieSlice({
+            centreX: 0 + this.truchetSettings["tileEdgeWidth"],
+            centreY: 0 + this.truchetSettings["tileEdgeWidth"],
+            startAngleRadians: 0 ,
+            sweepAngleRadians: degrees_to_radians(90),
+            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"],
             fillColour: "#000" } ); // border
-        this.topLeft = this.createPieSlice({ 
-            centreX: 0 + this.truchetSettings["tileEdgeWidth"], 
-            centreY: 0 + this.truchetSettings["tileEdgeWidth"], 
-            startAngleRadians: 0 , 
-            sweepAngleRadians: degrees_to_radians(90), 
-            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
+        this.topLeft = this.createPieSlice({
+            centreX: 0 + this.truchetSettings["tileEdgeWidth"],
+            centreY: 0 + this.truchetSettings["tileEdgeWidth"],
+            startAngleRadians: 0 ,
+            sweepAngleRadians: degrees_to_radians(90),
+            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"],
             fillColour: "#ccc" } );
         this.topLeftClass = 'truchetTopLeft';
         this.topLeft.setAttribute('class', 'truchetTopLeft');
@@ -122,39 +122,39 @@ class TruchetTile {
     //
 
     {
-        this.createPieSlice({ 
-            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
-            centreY: 0 + this.truchetSettings["tileEdgeWidth"], 
-            startAngleRadians: degrees_to_radians(90), 
-            sweepAngleRadians: degrees_to_radians(90), 
-            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
+        this.createPieSlice({
+            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"],
+            centreY: 0 + this.truchetSettings["tileEdgeWidth"],
+            startAngleRadians: degrees_to_radians(90),
+            sweepAngleRadians: degrees_to_radians(90),
+            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"],
             fillColour: "#000" }); // border
-        this.topRight = this.createPieSlice({ 
-            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
-            centreY: 0 + this.truchetSettings["tileEdgeWidth"], 
-            startAngleRadians: degrees_to_radians(90), 
-            sweepAngleRadians: degrees_to_radians(90), 
-            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
+        this.topRight = this.createPieSlice({
+            centreX: this.tileWidth - this.truchetSettings["tileEdgeWidth"],
+            centreY: 0 + this.truchetSettings["tileEdgeWidth"],
+            startAngleRadians: degrees_to_radians(90),
+            sweepAngleRadians: degrees_to_radians(90),
+            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"],
             fillColour: "#ccc" });
         this.topRightClass = 'truchetTopRight';
         this.topRight.setAttribute('class', 'truchetTopRight');
-        this.createPieSlice({ 
-            centreX: 0 + this.truchetSettings["tileEdgeWidth"], 
-            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
-            startAngleRadians: degrees_to_radians(270) , 
-            sweepAngleRadians: degrees_to_radians(90), 
-            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
+        this.createPieSlice({
+            centreX: 0 + this.truchetSettings["tileEdgeWidth"],
+            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"],
+            startAngleRadians: degrees_to_radians(270) ,
+            sweepAngleRadians: degrees_to_radians(90),
+            radius: ((this.tileWidth / 2) + (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"],
             fillColour: "#000" });
-        this.bottomLeft = this.createPieSlice({ 
-            centreX: 0 + this.truchetSettings["tileEdgeWidth"], 
-            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"], 
-            startAngleRadians: degrees_to_radians(270), 
-            sweepAngleRadians: degrees_to_radians(90), 
-            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"], 
+        this.bottomLeft = this.createPieSlice({
+            centreX: 0 + this.truchetSettings["tileEdgeWidth"],
+            centreY: this.tileWidth - this.truchetSettings["tileEdgeWidth"],
+            startAngleRadians: degrees_to_radians(270),
+            sweepAngleRadians: degrees_to_radians(90),
+            radius: ((this.tileWidth / 2) - (this.strokeWidth / 2)) - this.truchetSettings["tileEdgeWidth"],
             fillColour: "#ccc" });
         this.bottomLeftClass = 'truchetBottomLeft';
         this.bottomLeft.setAttribute('class', 'truchetBottomLeft');
-        
+
         this.topLeftClass = 'truchetBottomRightToTopLeftBack';
         this.bottomRightClass = 'truchetBottomRightToTopLeftBack';
         this.topLeft = this.blockContainer;
@@ -205,13 +205,13 @@ class TruchetTile {
             this.cornerPieceTop.element = this.topLeftElement;
             this.cornerPieceBottom.element = this.bottomRightElement;
         }
-        
+
 
         let topRightElements = document.querySelectorAll(`.${this.topRightClass}`);
         this.topRightElement = topRightElements[topRightElements.length -1];
         let bottomLeftElements = document.querySelectorAll(`.${this.bottomLeftClass}`);
         this.bottomLeftElement = bottomLeftElements[bottomLeftElements.length -1];
-        
+
         if (this.tileType == "a") {
             this.backPiece.element = this.topRightElement;
             this.backPiece.element = this.bottomLeftElement;
@@ -227,7 +227,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     var tilingArea = containerSquare;
     let mosaicSize = truchetSettings["tileDensity"];
     const tileWidth = tilingAreaWidthLength / truchetSettings["tileDensity"];
-    
+
     // create mosaic matrix
     let tileMatrix = [];
     for (let j = 0; j < mosaicSize; j++) {
@@ -247,10 +247,10 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     let tileAbove = null;
     for (let y = 0; y < mosaicSize; y++) {
         for (let x = 0; x < mosaicSize; x++) {
-            
-            tileToTheLeft = x > 0 ? tileMatrix[y][x - 1] : null;            
+
+            tileToTheLeft = x > 0 ? tileMatrix[y][x - 1] : null;
             tileAbove = y > 0 ? tileMatrix[y - 1][x] : null;
-            
+
             if (x == 0 && y == 0) {
                 // tile type 'a'
                 if (tileMatrix[y][x].tileType == "a") {
@@ -264,7 +264,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
                     tileMatrix[y][x].backPiece.colorGroup.push(colorGroups++);
                 }
-            } 
+            }
 
             // top row
             if (tileAbove == null && x > 0) {
@@ -309,7 +309,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1] == false)) {
                         tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
                     }
-                    
+
                 } else if (tileMatrix[y][x].tileType == "a" && tileToTheLeft.tileType == "b") {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
@@ -329,7 +329,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
                     }
-                    
+
                 } else if (tileMatrix[y][x].tileType == "a" && tileAbove.tileType == "a") {
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
@@ -337,7 +337,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]);
                     }
-                    
+
                 } else if (tileMatrix[y][x].tileType == "b" && tileAbove.tileType == "a") {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
@@ -352,7 +352,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
                     }
-                } 
+                }
 
             }
 
@@ -367,7 +367,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     let allGroups = [];
     for (let y = 0; y < mosaicSize; y++) {
         for (let x = 0; x < mosaicSize; x++) {
- 
+
             if (tileMatrix[y][x].backPiece.colorGroup.length > 1) {
                 groupsToJoin.push(tileMatrix[y][x].backPiece.colorGroup);
             }
@@ -377,10 +377,10 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     allGroups.push(group);
                 }
             })
-            
+
             if (tileMatrix[y][x].cornerPieceBottom.colorGroup.length > 1) {
                 groupsToJoin.push(tileMatrix[y][x].backPiece.colorGroup);
-            } 
+            }
 
             tileMatrix[y][x].cornerPieceBottom.colorGroup.forEach((group) => {
                 if (allGroups.includes(group) == false) {
@@ -390,7 +390,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
 
             if (tileMatrix[y][x].cornerPieceTop.colorGroup.length > 1) {
                 groupsToJoin.push(tileMatrix[y][x].backPiece.colorGroup);
-            } 
+            }
 
             tileMatrix[y][x].cornerPieceTop.colorGroup.forEach((group) => {
                 if (allGroups.includes(group) == false) {
@@ -400,12 +400,12 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
 
         }
     }
-    
+
     //
-  
+
     //const groupsToJoinSetArray = new Set(groupsToJoin.map(x => JSON.stringify(x)))
     //const groupsToJoinUniqArray = [...groupsToJoinSetArray].map(x => JSON.parse(x))
-    
+
     let unsortedArray = groupsToJoin;
     //console.log(groupsToJoin);
     //console.log(unsortedArray);
@@ -417,23 +417,23 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
 
 
     labeledArray.forEach((labeledChunk) => {
-        
+
         if (labeledChunk.sorted == false) {
             joinerArray.forEach((joinerSubArray) => {
                 joinerSubArray.forEach((joinerSubArrayItem) => {
                     if (joinerSubArrayItem == labeledChunk.group[0]) {
                         if (joinerSubArray.includes(labeledChunk.group[0]) == false) {
-                            joinerSubArray.push(labeledChunk.group[0]);    
+                            joinerSubArray.push(labeledChunk.group[0]);
                         }
                         joinerSubArray.push(labeledChunk.group[1]);
                         labeledChunk.sorted = true;
                     } else if (joinerSubArrayItem == labeledChunk.group[1]) {
                         if (joinerSubArray.includes(labeledChunk.group[1]) == false) {
-                            joinerSubArray.push(labeledChunk.group[1]);    
+                            joinerSubArray.push(labeledChunk.group[1]);
                         }
                         joinerSubArray.push(labeledChunk.group[0]);
                         labeledChunk.sorted = true;
-                    } 
+                    }
                 })
             })
 
@@ -458,7 +458,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                 }
             })
         })
-        
+
     })
 
     joinerArray.forEach((joinerArraySubArray) => {
@@ -509,7 +509,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
         if (onlyNonJoinedGroups.includes(joinerGroup)) {
             let index = onlyNonJoinedGroups.indexOf(joinerGroup);
         onlyNonJoinedGroups.splice(index, 1);
-        }    
+        }
     })
 
     // create arrays of contiguous DOM elements
@@ -534,7 +534,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     }
                 })
             }
-        } 
+        }
     }
 
     // console.log("all groups:");
@@ -562,7 +562,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     contiguousGroups.forEach((group) => {
         colorContiguousGroups(group);
     });
-    
+
     onlyNonJoinedContiguousDomElements.forEach((group) => {
         colorContiguousGroups(group);
     });

@@ -13,8 +13,8 @@ const tilingArea = "truchcetTilingArea";
 localStorage.setItem("truchetSettings-reset", "false")
 if (localStorage.getItem("truchetSettings") == null || localStorage.getItem("truchetSettings-reset") == "true") {
     // load default rhombile Settings
-    localStorage.setItem("truchetSettings", JSON.stringify({ 
-        tileDensity: 10, 
+    localStorage.setItem("truchetSettings", JSON.stringify({
+        tileDensity: 10,
         tileEdgeWidth: 5,
         tileEdgeColor: "#000",
         tileBorderWidth: 5,
@@ -45,16 +45,16 @@ window.addEventListener( 'resize', function(event) {
 });
 
 /////////////////////////////////////////////
-// the options menu 
+// the options menu
 ////////////////////////////////////////////
 const camelConverter = {
     contiguousGroupColors: "Contiguous Group Colors",
     monochrome: "Monochrome",
-    leftToRight: 'Left To Right', 
-    rightToLeft: 'Right To Left', 
+    leftToRight: 'Left To Right',
+    rightToLeft: 'Right To Left',
     topToBottom: 'Top To Bottom',
-    bottomToTop:'Bottom To Top', 
-    randomTileFadeIn: 'Random Tile Fade In', 
+    bottomToTop:'Bottom To Top',
+    randomTileFadeIn: 'Random Tile Fade In',
     randomBlockFadeIn: 'Random Block Fade In',
     static: "Static",
     tileRotations: "Tile Rotations"
@@ -62,17 +62,17 @@ const camelConverter = {
 
 const gui = new GUI();
 
-const obj = { 
-    density: truchetSettings["tileDensity"], 
-    tileEdgeWidth: truchetSettings["tileEdgeWidth"], 
-    tileEdgeColor: truchetSettings["tileEdgeColor"], 
-    tileBorderWidth: truchetSettings["tileBorderWidth"], 
-    tileBorderColor: truchetSettings["tileBorderColor"], 
-    overlayColor: truchetSettings["overlayColor"], 
-    overlayOpacity: truchetSettings["overlayOpacity"], 
-    coloring: camelConverter[truchetSettings.coloring], 
-    shapeEdgeWidth: truchetSettings["shapeEdgeWidth"], 
-    shapeEdgeColor: truchetSettings["shapeEdgeColor"], 
+const obj = {
+    density: truchetSettings["tileDensity"],
+    tileEdgeWidth: truchetSettings["tileEdgeWidth"],
+    tileEdgeColor: truchetSettings["tileEdgeColor"],
+    tileBorderWidth: truchetSettings["tileBorderWidth"],
+    tileBorderColor: truchetSettings["tileBorderColor"],
+    overlayColor: truchetSettings["overlayColor"],
+    overlayOpacity: truchetSettings["overlayOpacity"],
+    coloring: camelConverter[truchetSettings.coloring],
+    shapeEdgeWidth: truchetSettings["shapeEdgeWidth"],
+    shapeEdgeColor: truchetSettings["shapeEdgeColor"],
     monochromeColor: truchetSettings["colorTwo"],
     animations: camelConverter[truchetSettings.animation]
 }

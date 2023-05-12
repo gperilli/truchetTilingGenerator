@@ -24,13 +24,13 @@ function setTruchetBlockLayout(topLevelContainer, truchetSettings) {
 
     // get screen size
     topLevelContainerDimensions = topLevelContainerSize(topLevelContainer)
-    
+
     isLandscape = topLevelContainerDimensions.width > topLevelContainerDimensions.height;
     topLevelContainerParams = portraitLandscapeSwitcher(isLandscape, topLevelContainerDimensions.width, topLevelContainerDimensions.height)
     containerSquareWidth = topLevelContainerParams.width
     containerXOffset = topLevelContainerParams.left
     containerYOffset = topLevelContainerParams.top
-    
+
     // set position and size of main container square
     const containerSquareElement = `<div id="${tilingArea}" style="position: absolute; overflow: hidden;"></div>`;
     topLevelContainer.insertAdjacentHTML("beforeend", containerSquareElement);
@@ -48,7 +48,7 @@ function updateBlockLayout(topLevelContainer, truchetSettings) {
 
     // get screen size
     topLevelContainerDimensions = topLevelContainerSize(topLevelContainer)
-    
+
     isLandscape = topLevelContainerDimensions.width > topLevelContainerDimensions.height;
     topLevelContainerParams = portraitLandscapeSwitcher(isLandscape, topLevelContainerDimensions.width, topLevelContainerDimensions.height)
     containerSquareWidth = topLevelContainerParams.width
@@ -57,9 +57,9 @@ function updateBlockLayout(topLevelContainer, truchetSettings) {
 
     document.querySelector(`#${tilingArea}`).innerHTML = '';
     containerSquarePositioning(containerSquare, containerSquareWidth, containerXOffset, containerYOffset);
-    
+
     ////////////////////////////////////////////
     // set the truchet tiling
-    ////////////////////////////////////////////     
+    ////////////////////////////////////////////
     setTruchetTiling(containerSquare, containerSquareWidth, truchetSettings);
 }
