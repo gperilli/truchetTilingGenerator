@@ -405,7 +405,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
 
     //const groupsToJoinSetArray = new Set(groupsToJoin.map(x => JSON.stringify(x)))
     //const groupsToJoinUniqArray = [...groupsToJoinSetArray].map(x => JSON.parse(x))
-
+    console.log(tileMatrix);
     let unsortedArray = groupsToJoin;
     //console.log(groupsToJoin);
     //console.log(unsortedArray);

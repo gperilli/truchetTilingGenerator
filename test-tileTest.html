@@ -59,9 +59,8 @@ function updateLayout(topLevelContainer) {
 
     let isLandscape = topLevelContainerDimensions.width > topLevelContainerDimensions.height;
     let topLevelContainerParams = portraitLandscapeSwitcher(isLandscape, topLevelContainerDimensions.width, topLevelContainerDimensions.height)
-
     let containerSquare = document.querySelector("#tileInnerContainer");
-    //containerSquare.innerHTML = topLevelContainerParams.width;
+
     document.querySelector("#tileOuterContainer").style.width = topLevelContainerParams.width  + "px";
     document.querySelector("#tileOuterContainer").style.height = topLevelContainerParams.height  + "px";
     document.querySelector("#tileOuterContainer").style.left = topLevelContainerParams.left + "px";
@@ -72,7 +71,7 @@ function updateLayout(topLevelContainer) {
     document.querySelector("#tileInnerContainer").style.left = (topLevelContainerParams.width * 0.05) + "px";
     document.querySelector("#tileInnerContainer").style.top = (topLevelContainerParams.width * 0.05) + "px";
 
-    setTruchetTile(containerSquare, topLevelContainerParams.width) * 0.9;
+    setTruchetTile(containerSquare, topLevelContainerParams.width);
 }
 
 
@@ -122,38 +121,22 @@ function createTileA(blockContainer, squareWidth) {
     blockContainer.appendChild(rec);
     let strokeWidth = 5;
 
-    //let bottomRightArcBorder = createPieSlice({
-    //    centreX: squareWidth,
-    //    centreY: squareWidth,
-    //    startAngleRadians: degreesToRadians(180) ,
-    //    sweepAngleRadians: degreesToRadians(90),
-    //    radius: ((squareWidth / 2) + (strokeWidth / 2)),
-    //    fillColour: "#000" } ); //border
-
     let bottomRightArc = createPieSlice({
-        centreX: squareWidth,
-        centreY: squareWidth,
+        centreX: squareWidth * 0.9,
+        centreY: squareWidth * 0.9,
         startAngleRadians: degreesToRadians(180) ,
         sweepAngleRadians: degreesToRadians(90),
-        radius: ((squareWidth / 2) - (strokeWidth / 2)),
+        radius: ((squareWidth * 0.9) / 2),
         fillColour: "#ccc" }, rec );
 
     blockContainer.appendChild(bottomRightArc);
-
-    //let topLeftArcBorder = createPieSlice({
-    //    centreX: 0,
-    //    centreY: 0,
-    //    startAngleRadians: 0 ,
-    //    sweepAngleRadians: degreesToRadians(90),
-    //    radius: ((squareWidth / 2) + (strokeWidth / 2)),
-    //    fillColour: "#000" } ); // border
 
     let bottomLeftArc = createPieSlice({
         centreX: 0,
         centreY: 0,
         startAngleRadians: 0 ,
         sweepAngleRadians: degreesToRadians(90),
-        radius: ((squareWidth / 2) - (strokeWidth / 2)),
+        radius: ((squareWidth * 0.9) / 2),
         fillColour: "#ccc" }, rec );
 
     blockContainer.appendChild(bottomLeftArc);
