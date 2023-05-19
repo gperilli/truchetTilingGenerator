@@ -401,14 +401,9 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
         }
     }
 
-    //
 
-    //const groupsToJoinSetArray = new Set(groupsToJoin.map(x => JSON.stringify(x)))
-    //const groupsToJoinUniqArray = [...groupsToJoinSetArray].map(x => JSON.parse(x))
-    console.log(tileMatrix);
     let unsortedArray = groupsToJoin;
-    //console.log(groupsToJoin);
-    //console.log(unsortedArray);
+
     let joinerArray = [];
     let labeledArray = [];
     for (let i = 0; i < unsortedArray.length; i++) {
@@ -417,47 +412,40 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
 
 
     labeledArray.forEach((labeledChunk) => {
-
+        // putting unsorted items into subarrays of joinerArray
         if (labeledChunk.sorted == false) {
             joinerArray.forEach((joinerSubArray) => {
-                joinerSubArray.forEach((joinerSubArrayItem) => {
-                    if (joinerSubArrayItem == labeledChunk.group[0]) {
-                        if (joinerSubArray.includes(labeledChunk.group[0]) == false) {
-                            joinerSubArray.push(labeledChunk.group[0]);
-                        }
-                        joinerSubArray.push(labeledChunk.group[1]);
-                        labeledChunk.sorted = true;
-                    } else if (joinerSubArrayItem == labeledChunk.group[1]) {
-                        if (joinerSubArray.includes(labeledChunk.group[1]) == false) {
-                            joinerSubArray.push(labeledChunk.group[1]);
-                        }
-                        joinerSubArray.push(labeledChunk.group[0]);
-                        labeledChunk.sorted = true;
-                    }
-                })
+                if (joinerSubArray.includes(labeledChunk.group[0]) || joinerSubArray.includes(labeledChunk.group[1]) ) {
+                    joinerSubArray.push(labeledChunk.group[0]);
+                    joinerSubArray.push(labeledChunk.group[1]);
+                    labeledChunk.sorted = true;
+                }
             })
 
             if (labeledChunk.sorted == false) {
                 joinerArray.push(labeledChunk.group);
                 labeledChunk.sorted = true;
             }
-        }
 
-        joinerArray.forEach((joinerSubArray) => {
-            joinerArray.forEach((joinerSubArrayComparison) => {
-                if (joinerSubArray != joinerSubArrayComparison) {
-                    joinerSubArray.forEach((joinerSubArrayItem) => {
-                        if (joinerSubArrayComparison.includes(joinerSubArrayItem)) {
-                            joinerSubArrayComparison.forEach((joinerSubArrayComparisonItem) => {
-                                if (joinerSubArray.includes(joinerSubArrayComparisonItem) == false) {
-                                    joinerSubArray.push(joinerSubArrayComparisonItem)
-                                }
-                            })
-                        }
-                    })
-                }
+            joinerArray.forEach((joinerSubArray) => {
+                joinerArray.forEach((joinerSubArrayComparison) => {
+                    // only compare different subarrays within parent array
+                    if (joinerSubArray != joinerSubArrayComparison) {
+                        joinerSubArray.forEach((joinerSubArrayItem) => {
+                            // determine if there is a shared item
+                            if (joinerSubArrayComparison.includes(joinerSubArrayItem)) {
+                                // if there is a shared item,  take all items from the joinerSubArrayComparison sub array into the joinerSubArray (if they are not already there)
+                                joinerSubArrayComparison.forEach((joinerSubArrayComparisonItem) => {
+                                    if (joinerSubArray.includes(joinerSubArrayComparisonItem) == false) {
+                                        joinerSubArray.push(joinerSubArrayComparisonItem)
+                                    }
+                                })
+                            }
+                        })
+                    }
+                })
             })
-        })
+        }
 
     })
 
@@ -472,8 +460,15 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
         return arr;
     };
 
-    let duplicateRemovedJoinerArray = removeDuplicates(joinerArray);
-    console.log(duplicateRemovedJoinerArray);
+    // remove duplicate numbers within the sub arrays
+    let innerDuplicateRemovedJoinerArray = [];
+    for (let i = 0; i < joinerArray.length; i++) {
+        innerDuplicateRemovedJoinerArray[i] = removeDuplicates(joinerArray[i]);
+    }
+
+    // remove duplicate groups
+    let duplicateRemovedJoinerArray = removeDuplicates(innerDuplicateRemovedJoinerArray);
+
 
     // create arrays of contiguous DOM elements
     let contiguousGroups = [];

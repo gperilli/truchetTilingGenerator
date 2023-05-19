@@ -146,8 +146,6 @@ gui.addColor( obj, 'shapeEdgeColor' ).onChange( value => {
     //setTruchetBlockLayout(topLevelContainer, truchetSettings)
 });
 
-
-
 gui.add( obj, 'coloring', [ 'Contiguous Group Colors', 'Monochrome', 'Not Filled In' ] ).onChange( value => {
     let unspacedValue = value.replaceAll(' ', '');
     let camelizedValue = unspacedValue.replace(unspacedValue.charAt(0), unspacedValue.charAt(0).toLowerCase());
@@ -158,13 +156,13 @@ gui.add( obj, 'coloring', [ 'Contiguous Group Colors', 'Monochrome', 'Not Filled
 });
 
 
-gui.addColor( obj, 'monochromeColor' ).onChange( value => {
-    truchetSettings.monochromeColor = value;
-    console.log(truchetSettings)
-    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
-    document.querySelector(`#${tilingArea}`).remove()
-    setRhombileBlockLayout(topLevelContainer, truchetSettings)
-});
+//gui.addColor( obj, 'monochromeColor' ).onChange( value => {
+//    truchetSettings.monochromeColor = value;
+//    console.log(truchetSettings)
+//    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+//    document.querySelector(`#${tilingArea}`).remove()
+//    setRhombileBlockLayout(topLevelContainer, truchetSettings)
+//});
 
 gui.add( obj, 'animations', [ 'Static', 'Random Tile Rotate' ] ).onChange( value => {
     let unspacedValue = value.replaceAll(' ', '');
