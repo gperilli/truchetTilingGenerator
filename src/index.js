@@ -24,7 +24,8 @@ if (localStorage.getItem("truchetSettings") == null || localStorage.getItem("tru
         shapeEdgeWidth: 5,
         shapeEdgeColor: "#000",
         coloring: "Contiguous Group Colors",
-        monochromeColor: "#000",
+        monochromeColorOne: "#000",
+        monochromeColorTwo: "#fff",
         opacityGradient: "Left To Right",
         animation: "Static"
     }))
@@ -73,7 +74,8 @@ const obj = {
     coloring: camelConverter[truchetSettings.coloring],
     shapeEdgeWidth: truchetSettings["shapeEdgeWidth"],
     shapeEdgeColor: truchetSettings["shapeEdgeColor"],
-    monochromeColor: truchetSettings["colorTwo"],
+    monochromeColorOne: truchetSettings["monochromeColorOne"],
+    monochromeColorTwo: truchetSettings["monochromeColorTwo"],
     animations: camelConverter[truchetSettings.animation]
 }
 
@@ -156,13 +158,21 @@ gui.add( obj, 'coloring', [ 'Contiguous Group Colors', 'Monochrome', 'Not Filled
 });
 
 
-//gui.addColor( obj, 'monochromeColor' ).onChange( value => {
-//    truchetSettings.monochromeColor = value;
-//    console.log(truchetSettings)
-//    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
-//    document.querySelector(`#${tilingArea}`).remove()
-//    setRhombileBlockLayout(topLevelContainer, truchetSettings)
-//});
+gui.addColor( obj, 'monochromeColorOne' ).onChange( value => {
+    truchetSettings.monochromeColorOne = value;
+    console.log(truchetSettings)
+    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
+});
+
+gui.addColor( obj, 'monochromeColorTwo' ).onChange( value => {
+    truchetSettings.monochromeColorTwo = value;
+    console.log(truchetSettings)
+    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
+});
 
 gui.add( obj, 'animations', [ 'Static', 'Random Tile Rotate' ] ).onChange( value => {
     let unspacedValue = value.replaceAll(' ', '');

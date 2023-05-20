@@ -32,9 +32,14 @@ class TruchetTile {
         this.botttomLeftElement;
         this.bottomRightElement;
 
-        this.cornerPieceTop = {element: null, colorGroup: []};
-        this.cornerPieceBottom = {element: null, colorGroup: []};
-        this.backPiece = {element: null, colorGroup: []};
+        this.topLeftMonoColor;
+        this.topRightMonoColor;
+        this.bottomLeftMonoColor;
+        this.bottomRightMonoColor;
+
+        this.cornerPieceTop = {element: null, colorGroup: [], monoColor: null};
+        this.cornerPieceBottom = {element: null, colorGroup: [], monoColor: null};
+        this.backPiece = {element: null, colorGroup: [], monoColor: null};
 
         this.init()
     }
@@ -256,6 +261,11 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                 if (tileMatrix[y][x].tileType == "a") {
                     tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
                     tileMatrix[y][x].backPiece.colorGroup.push(colorGroups++);
+
+                    tileMatrix[y][x].topLeftMonoColor = 0;
+                    tileMatrix[y][x].topRightMonoColor = 1;
+                    tileMatrix[y][x].bottomLeftMonoColor = 1;
+                    tileMatrix[y][x].bottomRightMonoColor = 0;
                 }
 
                 // tile type 'b'
@@ -263,6 +273,11 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     tileMatrix[y][x].cornerPieceTop.colorGroup.push(colorGroups++);
                     tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
                     tileMatrix[y][x].backPiece.colorGroup.push(colorGroups++);
+
+                    tileMatrix[y][x].topLeftMonoColor = 1;
+                    tileMatrix[y][x].topRightMonoColor = 0;
+                    tileMatrix[y][x].bottomLeftMonoColor = 0;
+                    tileMatrix[y][x].bottomRightMonoColor = 1;
                 }
             }
 
@@ -273,10 +288,15 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                 }
 
                 if (tileMatrix[y][x].tileType == "a" && tileToTheLeft.tileType == "b") {
-                        tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
+                    tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.cornerPieceTop.colorGroup[tileToTheLeft.cornerPieceTop.colorGroup.length - 1]);
                 } else if (tileMatrix[y][x].tileType == "a" && tileToTheLeft.tileType == "a") {
                     tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
                 }
+
+                tileMatrix[y][x].topLeftMonoColor = tileToTheLeft.topRightMonoColor;
+                tileMatrix[y][x].bottomLeftMonoColor = tileToTheLeft.bottomRightMonoColor;;
+                tileMatrix[y][x].topRightMonoColor = tileMatrix[y][x].bottomLeftMonoColor;
+                tileMatrix[y][x].bottomRightMonoColor = tileMatrix[y][x].topLeftMonoColor;
             }
 
             // far left column
@@ -284,6 +304,18 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                 if (tileMatrix[y][x].tileType == "b") {
                     tileMatrix[y][x].cornerPieceBottom.colorGroup.push(colorGroups++);
                 }
+
+                tileMatrix[y][x].topLeftMonoColor = tileAbove.bottomLeftMonoColor;
+                tileMatrix[y][x].topRightMonoColor = tileAbove.bottomRightMonoColor;
+                tileMatrix[y][x].bottomLeftMonoColor = tileMatrix[y][x].topRightMonoColor;
+                tileMatrix[y][x].bottomRightMonoColor = tileMatrix[y][x].topLeftMonoColor;
+            }
+
+            if (y > 0 && x > 0) {
+                tileMatrix[y][x].topLeftMonoColor = tileToTheLeft.topRightMonoColor;
+                tileMatrix[y][x].bottomLeftMonoColor = tileToTheLeft.bottomRightMonoColor;;
+                tileMatrix[y][x].topRightMonoColor = tileMatrix[y][x].bottomLeftMonoColor;
+                tileMatrix[y][x].bottomRightMonoColor = tileMatrix[y][x].topLeftMonoColor;
             }
 
             if (tileToTheLeft != null) {
@@ -309,7 +341,6 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     if (tileMatrix[y][x].cornerPieceTop.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1] == false)) {
                         tileMatrix[y][x].cornerPieceTop.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
                     }
-
                 } else if (tileMatrix[y][x].tileType == "a" && tileToTheLeft.tileType == "b") {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileToTheLeft.backPiece.colorGroup[tileToTheLeft.backPiece.colorGroup.length - 1]);
@@ -337,7 +368,6 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.cornerPieceBottom.colorGroup[tileAbove.cornerPieceBottom.colorGroup.length - 1]);
                     }
-
                 } else if (tileMatrix[y][x].tileType == "b" && tileAbove.tileType == "a") {
                     if (tileMatrix[y][x].backPiece.colorGroup.includes(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]) == false) {
                         tileMatrix[y][x].backPiece.colorGroup.push(tileAbove.backPiece.colorGroup[tileAbove.backPiece.colorGroup.length - 1]);
@@ -554,11 +584,32 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
         })
     }
 
-    contiguousGroups.forEach((group) => {
-        colorContiguousGroups(group);
-    });
 
-    onlyNonJoinedContiguousDomElements.forEach((group) => {
-        colorContiguousGroups(group);
-    });
+    console.log(truchetSettings);
+
+    if (truchetSettings.coloring == "monochrome") {
+        for (let y = 0; y < mosaicSize; y++) {
+            for (let x = 0; x < mosaicSize; x++) {
+                if (tileMatrix[y][x].tileType == "a") {
+                    tileMatrix[y][x].cornerPieceTop.element.style.fill = tileMatrix[y][x].topLeftMonoColor == 1 ? truchetSettings["monochromeColorTwo"] : truchetSettings["monochromeColorOne"];
+                    tileMatrix[y][x].cornerPieceBottom.element.style.fill = tileMatrix[y][x].bottomRightMonoColor == 1 ? truchetSettings["monochromeColorTwo"] : truchetSettings["monochromeColorOne"];
+                    tileMatrix[y][x].backPiece.element.style.background = tileMatrix[y][x].topRightMonoColor == 1 ? truchetSettings["monochromeColorTwo"] : truchetSettings["monochromeColorOne"];
+                } else {
+                    tileMatrix[y][x].cornerPieceTop.element.style.fill = tileMatrix[y][x].topRightMonoColor == 1 ? truchetSettings["monochromeColorTwo"] : truchetSettings["monochromeColorOne"];
+                    tileMatrix[y][x].cornerPieceBottom.element.style.fill = tileMatrix[y][x].bottomLeftMonoColor == 1 ? truchetSettings["monochromeColorTwo"] : truchetSettings["monochromeColorOne"];
+                    tileMatrix[y][x].backPiece.element.style.background = tileMatrix[y][x].topLeftMonoColor == 1 ? truchetSettings["monochromeColorTwo"] : truchetSettings["monochromeColorOne"];
+                }
+
+
+            }
+        }
+    } else {
+        onlyNonJoinedContiguousDomElements.concat(contiguousGroups).forEach((group) => {
+            colorContiguousGroups(group);
+        });
+    }
+
+
+
+
 }
