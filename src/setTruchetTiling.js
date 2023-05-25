@@ -498,7 +498,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
 
     // remove duplicate groups
     let duplicateRemovedJoinerArray = removeDuplicates(innerDuplicateRemovedJoinerArray);
-
+    console.log(duplicateRemovedJoinerArray);
 
     // create arrays of contiguous DOM elements
     let contiguousGroups = [];
@@ -526,6 +526,8 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
             }
         })
     }
+
+    // console.log(contiguousGroups);
 
     // get color groups that were not joined
     let flatJoinerArray = duplicateRemovedJoinerArray.flat();
@@ -574,7 +576,10 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
     // console.log(contiguousGroups);
 
     function colorContiguousGroups(group) {
-        let randHexColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+        // let randHexColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+        let randHexColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+        console.log(group);
+        console.log(randHexColor);
         group.forEach((part) => {
             if (part.className.baseVal == 'truchetBottomLeftToTopRightBack' || part.className.baseVal == 'truchetBottomRightToTopLeftBack') {
                 part.style.background = randHexColor;
@@ -584,7 +589,7 @@ function setTruchetTiling(containerSquare, tilingAreaWidthLength, truchetSetting
         })
     }
 
-
+    // console.log(onlyNonJoinedContiguousDomElements.concat(contiguousGroups));
     console.log(truchetSettings);
 
     if (truchetSettings.coloring == "monochrome") {
