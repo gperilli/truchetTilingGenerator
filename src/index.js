@@ -15,8 +15,8 @@ if (localStorage.getItem("truchetSettings") == null || localStorage.getItem("tru
     // load default rhombile Settings
     localStorage.setItem("truchetSettings", JSON.stringify({
         tileDensity: 10,
-        tileEdgeWidth: 5,
-        tileEdgeColor: "#000",
+        shapeEdgeWidth: 5,
+        shapeEdgeColor: "#000",
         tileBorderWidth: 5,
         tileBorderColor: "#000",
         overlayColor: "#000",
@@ -133,19 +133,19 @@ gui.add( obj, 'overlayOpacity', 0, 1, 0.1 ).onChange( value => {
 
 
 
-gui.add( obj, 'shapeEdgeWidth', 0, 20, 1 ).onChange( value => {
-    truchetSettings.shapeEdgeWidth = Math.floor(value);
+gui.add( obj, 'shapeEdgeWidth', 0, 1 ).onChange( value => {
+    truchetSettings.shapeEdgeWidth = value;
     localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
-    //document.querySelector(`#${tilingArea}`).remove()
-    //setTruchetBlockLayout(topLevelContainer, truchetSettings)
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
 });
 
 gui.addColor( obj, 'shapeEdgeColor' ).onChange( value => {
     truchetSettings.shapeEdgeColor = value;
     console.log(truchetSettings)
     localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
-    //document.querySelector(`#${tilingArea}`).remove()
-    //setTruchetBlockLayout(topLevelContainer, truchetSettings)
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
 });
 
 gui.add( obj, 'coloring', [ 'Contiguous Group Colors', 'Monochrome', 'Not Filled In' ] ).onChange( value => {
