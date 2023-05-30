@@ -174,11 +174,11 @@ gui.addColor( obj, 'monochromeColorTwo' ).onChange( value => {
     setTruchetBlockLayout(topLevelContainer, truchetSettings)
 });
 
-gui.add( obj, 'animations', [ 'Static', 'Random Tile Rotate' ] ).onChange( value => {
-    let unspacedValue = value.replaceAll(' ', '');
-    let camelizedValue = unspacedValue.replace(unspacedValue.charAt(0), unspacedValue.charAt(0).toLowerCase());
-    truchetSettings.coloring = camelizedValue
-    localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
-    document.querySelector(`#${tilingArea}`).remove()
-    setTruchetBlockLayout(topLevelContainer, truchetSettings)
-});
+// gui.add( obj, 'animations', [ 'Static', 'Random Tile Rotate' ] ).onChange( value => {
+//     let unspacedValue = value.replaceAll(' ', '');
+//     let camelizedValue = unspacedValue.replace(unspacedValue.charAt(0), unspacedValue.charAt(0).toLowerCase());
+//     truchetSettings.coloring = camelizedValue
+//     localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
+//     document.querySelector(`#${tilingArea}`).remove()
+//     setTruchetBlockLayout(topLevelContainer, truchetSettings)
+// });

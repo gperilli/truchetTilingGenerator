@@ -1,6 +1,26 @@
 {
+  "name": "truchet",
+  "version": "1.0.0",
+  "description": "A truchet mosaic generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gperilli/truchet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gperilli/truchet/issues"
+  },
+  "devDependencies": {
+    "lil-gui": "^0.18.0",
+    "webpack-cli": "^5.1.1"
+  },
   "dependencies": {
-    "lil-gui": "^0.18.1",
-    "webpack": "^5.76.2"
+    "webpack": "^5.76.1"
   }
 }
