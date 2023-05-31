@@ -17,6 +17,8 @@ if (localStorage.getItem("truchetSettings") == null || localStorage.getItem("tru
         tileDensity: 10,
         shapeEdgeWidth: 5,
         shapeEdgeColor: "#000",
+        tileEdgeWidth: 5,
+        tileEdgeColor: "#fff",
         tileBorderWidth: 5,
         tileBorderColor: "#000",
         overlayColor: "#000",
