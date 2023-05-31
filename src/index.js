@@ -97,8 +97,8 @@ gui.addColor( obj, 'tileEdgeColor' ).onChange( value => {
     truchetSettings.tileEdgeColor = value;
     console.log(truchetSettings)
     localStorage.setItem("truchetSettings", JSON.stringify(truchetSettings))
-    //document.querySelector(`#${tilingArea}`).remove()
-    //setTruchetBlockLayout(topLevelContainer, truchetSettings)
+    document.querySelector(`#${tilingArea}`).remove()
+    setTruchetBlockLayout(topLevelContainer, truchetSettings)
 });
 
 gui.add( obj, 'tileBorderWidth', 0, 20, 1 ).onChange( value => {
