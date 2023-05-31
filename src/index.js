@@ -27,7 +27,7 @@ if (localStorage.getItem("truchetSettings") == null || localStorage.getItem("tru
         monochromeColorOne: "#000",
         monochromeColorTwo: "#fff",
         opacityGradient: "Left To Right",
-        animation: "Static"
+        // animation: "Static"
     }))
 }
 const truchetSettings = JSON.parse(localStorage.getItem("truchetSettings"))
@@ -76,7 +76,7 @@ const obj = {
     shapeEdgeColor: truchetSettings["shapeEdgeColor"],
     monochromeColorOne: truchetSettings["monochromeColorOne"],
     monochromeColorTwo: truchetSettings["monochromeColorTwo"],
-    animations: camelConverter[truchetSettings.animation]
+    // animations: camelConverter[truchetSettings.animation]
 }
 
 gui.add( obj, 'density', 3, 20, 1 ).onChange( value => {
@@ -130,8 +130,6 @@ gui.add( obj, 'overlayOpacity', 0, 1, 0.1 ).onChange( value => {
     document.querySelector(`#${tilingArea}`).remove()
     setTruchetBlockLayout(topLevelContainer, truchetSettings)
 });
-
-
 
 gui.add( obj, 'shapeEdgeWidth', 0, 1 ).onChange( value => {
     truchetSettings.shapeEdgeWidth = value;
