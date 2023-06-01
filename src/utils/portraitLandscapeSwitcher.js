@@ -15,9 +15,9 @@ function portraitLandscapeSwitcher(isLandscape, screenWidth, screenHeight) {
         centralContainerYOffset = 0;
     }
     let centralContainerParams = {
-        width: centralContainerSquareWidth, 
-        height: centralContainerSquareWidth, 
-        left: centralContainerXOffset, 
+        width: centralContainerSquareWidth,
+        height: centralContainerSquareWidth,
+        left: centralContainerXOffset,
         top: centralContainerYOffset
     }
     return centralContainerParams
